@@ -2,12 +2,12 @@
 
 > music by mingshuang
 
-##接口来自：网易云api
+## 接口来自：网易云api
 
 附上链接：https://github.com/Binaryify/NeteaseCloudMusicApi
 接口配置可见该链接
 
-##本项目为一个入门前端进行项目练习实战的一个练手项目
+## 本项目为一个入门前端进行项目练习实战的一个练手项目
 
 配置：node.js,webpack,vue,vue-cli等
 
