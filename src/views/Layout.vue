@@ -1,13 +1,10 @@
 <template>
     <div>
         <div class="Top">
-            头部
+            <span style="font-size:1rem;">头部</span>
         </div>
-        <div style="min-height:500px;width:100%;">
+        <div style="min-height:10rem;width:100%;">
             <router-view/>
-        </div>
-        <div style="border:1px solid black;height:100px;">
-            尾部
         </div>
     </div>
 </template>
@@ -24,7 +21,7 @@ export default {
 
 <style lang="">
 .Top{
-    height: 70px;
+    height: 2rem;
     border: 1px solid black;
 }
 </style>

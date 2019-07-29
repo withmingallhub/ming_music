@@ -7,12 +7,10 @@ export default[
         path: '/',
         name: 'Layout',
         component: Layout,
-        children: [
-            {
-                path: '/SignUp',
-                component: SignUp
-            }
-        ]
     },
+    {
+        path: '/SignUp',
+        component: SignUp,
+    }
     
 ]
