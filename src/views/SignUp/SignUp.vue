@@ -1,7 +1,8 @@
 <template>
-    <div class="main">
-        <div style="padding-bottom:0.5rem;margin:0.5rem 0rem;border-bottom:2px solid rgb(75,105,201)">
-            <h2>注册：</h2>
+    <div class="main"  @touchmove.prevent>
+        <div style="height:1.5rem;background:rgba(25,137,250,0.3);margin-bottom:1.5rem;">
+            <van-icon @click="goLogin" name="arrow-left" class="icon" />
+            <span style="font-size:0.7rem;line-height:1.5rem;text-align:center;clear:both;margin-left:-0.8rem;">{{ tittle }}</span>
         </div>
         <div v-show="Sign">
             <van-cell-group>
@@ -59,10 +60,13 @@
 <script>
 import axios from 'axios'
 import { Notify } from 'vant';
+import { Icon } from 'vant';
+import md5 from 'js-md5';
 
 export default {
     data() {
         return {
+            tittle:'注册',
             SignUp: {
                 captcha: '',
                 phone: '',
@@ -77,35 +81,44 @@ export default {
         }
     },
     mounted() {
-        
+        this.changeTittle()
     },
     methods: {
+        changeTittle(){
+            this.tittle = this.$route.query.value
+        },
         getCaptcha(){
             let phone = this.SignUp.phone
             if(!phone){
                 Notify('请输入手机号码！');
             }else{
-                axios.post('/api/captcha/sent?phone=' + phone,{
-                    phone: phone,
-                }).then((res)=>{
-                    Notify({
-                        message: '发送成功',
-                        duration: 1000,
-                        background: 'rgb(127,174,66)'
+                if (!(/^1[34578]\d{9}$/.test(phone))) {
+                    Notify('手机号码格式错误')
+                }else{
+                    axios.post('/api/captcha/sent?phone=' + phone,{
+                        phone: phone,
+                    }).then((res)=>{
+                        Notify({
+                            message: '发送成功',
+                            duration: 1000,
+                            background: 'rgb(127,174,66)'
+                        })
+                        this.count = 120;
+                        this.show = false;
+                        this.timer = setInterval(() => {
+                        if (this.count > 0 && this.count <= 120) {
+                            this.count--;
+                        } else {
+                            this.show = true;
+                            clearInterval(this.timer);
+                            this.timer = null;
+                        }
+                        }, 1000)
+                        console.log(res)
+                    }).catch(function(error){
+                        Notify('获取验证码失败！')
                     })
-                    this.count = 120;
-                    this.show = false;
-                    this.timer = setInterval(() => {
-                    if (this.count > 0 && this.count <= 120) {
-                        this.count--;
-                    } else {
-                        this.show = true;
-                        clearInterval(this.timer);
-                        this.timer = null;
-                    }
-                    }, 1000)
-                    console.log(res)
-                })
+                }
             }
         },
         SignUpIt(){
@@ -116,9 +129,9 @@ export default {
                 if(res1.statusText == 'OK'){
                     this.Sign = false
                 }
-                else{
-                    Notify('验证码错误！')
-                }
+            }).catch(function(error) {
+                if(error.response.data.code === 503)
+                Notify('验证码错误')
             })
         },
         SignUpNum(){
@@ -127,15 +140,42 @@ export default {
                     Notify('两次密码不相等！')
                 }
                 else{
-                    axios.post('/cellphone/existence/check?phone=' + this.SignUp.phone,{
+                    this.SignUp.password = md5(this.SignUp.password)
+                    this.isPassword = md5(this.isPassword)
+                    console.log(this.SignUp.password)
+                    axios.post('/api/cellphone/existence/check?phone=' + this.SignUp.phone,{
                         phone:this.SignUp.phone
-                    }),then((res)=>{
+                    }).then((res)=>{
                         console.log(res)
+                        if(res.statusText === 'OK'){
+                            axios.post('/api/register/cellphone?phone=' + this.SignUp.phone + '&password=' + this.SignUp.password + '&captcha=' + this.SignUp.captcha + '&nickname=' + this.SignUp.nickname,{
+                                phone: this.SignUp.phone,
+                                password: this.SignUp.password,
+                                captcha: this.SignUp.captcha,
+                                nickname: this.SignUp.nickname
+                            }).then((res1)=>{
+                                if(res1.statusText === 'OK'){
+                                    Notify({
+                                        message: '注册成功',
+                                        duration:1000,
+                                        background: 'rgb(127,174,66)'
+                                    })
+                                }
+                            }).catch(function(error) {
+                                Notify('该用户名已被占用！')
+                            })
+                        }
+                        
+                    }).catch(function(error) {
+                        Notify('该账号已经被注册！')
                     })
                 }
             }else{
                 Notify('信息不完整！')
             }
+        },
+        goLogin(){
+            this.$router.push({path:'/Login'})
         }
     },
 }
@@ -143,10 +183,18 @@ export default {
 
 <style lang="">
 .main{
-    min-height:5rem;
     width:100%;
+    height:50rem;
+    background-size:contain;
+    background-image: url(../../assets/login.jpeg);
+    background-repeat: no-repeat
 }
 .theseIn{
     margin-top:0.5rem;
+}
+.icon{
+    float:left;
+    line-height:1.5rem;
+    font-size:0.8rem;
 }
 </style>
