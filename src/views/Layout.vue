@@ -52,7 +52,6 @@ export default {
             axios.post('/api/user/playlist?uid=' + this.userId,{
                 uid:this.userId
             }).then((res)=>{
-                console.log(res)
                 this.$store.dispatch('getMusicIn',res.data)
                 this.MusicInfo = this.$store.state.user.musicInfo
             })
