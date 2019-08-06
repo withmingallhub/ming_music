@@ -6,7 +6,8 @@ export default {
     },
     musicInfo: {
 
-    }
+    },
+    userId:''
   },
   mutations: {
     getInfo(state, param) {
@@ -14,6 +15,9 @@ export default {
     },
     getMusicInfo(state, param){
         state.musicInfo = param
+    },
+    getUserId(state,id){
+        state.userId = id
     }
   },
   getters: {
@@ -25,6 +29,9 @@ export default {
     },
     getMusicIn(context, info){
         return context.commit('getMusicInfo', info)
-      }
+      },
+    setUserId(context, id){
+      return context.commit('getUserId', id)
+    }
   }
 }
