@@ -2,24 +2,35 @@
 import SignUp from '@/views/SignUp/SignUp'
 import Login from '@/views/login/login'
 import main from '@/views/main/main'
+import musicMore from '@/views/musicMore/musicMore'
 import listenList from '@/views/main/listenList'
-import listenMusic from '@/components/listenMusic/listenMusic'
 import Layout from '@/views/Layout'
+import listen from '@/views/listen'
 
 export default[
     {
-        path: '/',
-        name: 'Layout',
-        component: Layout,
+        path:'/',
+        component:listen,
         children: [
             {
                 path: '/',
-                component: main
+                name: 'Layout',
+                component: Layout,
+                children: [
+                    {
+                        path: '/',
+                        component: main
+                    },
+                    {
+                        path: '/listenList',
+                        component: listenList
+                    },
+                ]
             },
             {
-                path: '/listenList',
-                component: listenList
-            }
+                path: '/musicMore',
+                component: musicMore
+            },
         ]
     },
     {
@@ -29,10 +40,6 @@ export default[
     {
         path: '/Login',
         component: Login
-    },
-    {
-        path: '/listenMusic',
-        component: listenMusic
-    },
+    }
     
 ]

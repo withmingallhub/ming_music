@@ -1,11 +1,17 @@
 <template>
     <div>
-        <div style="overflow:hidden;height:2rem;background:rgba(25,137,250,0.3);text-align:center;">
+        <div style="background:white;overflow:hidden;height:1.2rem;text-align:center;position:fixed;width:100%;">
             <van-icon @click="goMain" name="arrow-left" class="icon" />
             <span class="topName">{{ top }}</span>
         </div>
+        <div style="height:1.2rem;">
+
+        </div>
         <div>
-            <li class="mlist" @click="getmusics(li)" v-for="(li ,item) in list" :key="item">{{li.name}}</li>
+            <li :class="mlist1 === item ? 'playMlist' : 'mlist'" @click="getmusics(li, item)" v-for="(li ,item) in list" :key="item">
+                <span class="musicName" style="margin-right:0.2rem;">{{li.name}}</span>
+                <span style="margin-left:0.2rem;line-height:1.2rem;" v-for="(name, item1) in li.ar" :key="item1">{{ name.name }}</span>
+            </li>
         </div>
     </div>
 </template>
@@ -16,29 +22,40 @@ import axios from 'axios'
 export default {
     data(){
         return {
+            // 歌单id
             id: '',
+            // 歌单名称
             top:'',
-            list: []
+            // 歌单列表信息
+            list: [],
+            mlist1:'',
+            item:''
         }
     },
     methods: {
+        // mounted进行请求，获取歌曲列表每首歌曲信息,这个发送的id是歌单id
         getMusic(){
             axios.post('/api/playlist/detail?id=' + this.id,{
                 id: this.id
             }).then((res)=>{
                 this.list = res.data.playlist.tracks
+                console.log(this.list)
             })
         },
-        getmusics(li){
-            this.$emit('getid',li.al)    
+        // 向父级组件传递点击歌曲的id，这个id是歌曲id
+        getmusics(li, item){
+            this.mlist1 = item
+            this.$emit('getid',li.id,li.al.picUrl,li.name)    
             // console.log(li.al)
             // this.$router.push({path:'/listenMusic',query:{id:li.al.id}})
         },
+        // 点击返回，返回主页
         goMain(){
             this.$router.push({path:'/'})
         }
     },
     mounted() {
+        // mounted完成获取歌单名称top，以及歌单id
         this.id = this.$route.query.id
         this.top = this.$route.query.top
         this.getMusic()
@@ -49,22 +66,38 @@ export default {
 <style lang="">
 .mlist{
     list-style: none;
-    height: 1.5rem;
+    height: 1.2rem;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space:nowrap;
-    font-size: 0.5rem;
-    line-height: 1.5rem;
-    border-bottom: 1px solid rgb(155,155,155)
+    text-align:left;
+    padding-left: 0.3rem;
+    background: rgb(245, 245, 245);
+    border-left: 2px solid white;
+}
+.playMlist{
+    list-style: none;
+    height: 1.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    text-align:left;
+    padding-left: 0.3rem;
+    background: rgb(245, 245, 245);
+    border-left: 2px solid green;
+}
+.musicName{
+    font-size: 0.4rem;
+    line-height: 1rem;
 }
 .icon{
-    font-size: 1rem;
+    font-size: 0.5rem;
     float: left;
-    line-height: 2rem;
+    line-height: 1.2rem;
 }
 .topName{
-    line-height: 2rem;
-    font-size: 0.6rem;
+    line-height: 1.2rem;
+    font-size: 0.4rem;
     clear: both;
     margin-left: -1rem;
 }

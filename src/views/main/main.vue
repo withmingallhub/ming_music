@@ -29,7 +29,6 @@ export default {
         getMusicList(){
             const that = this
             axios.get('/api/login/status').then((res)=>{
-                console.log(res)
                 that.userId = res.data.profile.userId
                 that.musicInfo()
             }).catch(function(error){
@@ -42,12 +41,10 @@ export default {
             axios.post('/api/user/playlist?uid=' + this.userId,{
                 uid:this.userId
             }).then((res)=>{
-                console.log(res.data.playlist)
                 this.musicList = res.data.playlist
             })
         },
         getList(id,name){
-            console.log('aaa')
             this.$router.push({path:'/listenList',query:{id:id,top:name}})
         }
     }
