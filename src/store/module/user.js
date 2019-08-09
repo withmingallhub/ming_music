@@ -1,13 +1,20 @@
 
 export default {
   state: {
+    // 用户信息
     userInfo: {
 
     },
+    // 用户音乐信息
     musicInfo: {
 
     },
-    userId:''
+    // 用户id
+    userId:'',
+    // 播放器上正在  播放/暂停  的音乐的id,名称,以及图片的url
+    playMusic:{
+
+    }
   },
   mutations: {
     getInfo(state, param) {
@@ -18,6 +25,9 @@ export default {
     },
     getUserId(state,id){
         state.userId = id
+    },
+    getPlayMusic(state, musicPic){
+      state.playMusic = musicPic
     }
   },
   getters: {
@@ -32,6 +42,9 @@ export default {
       },
     setUserId(context, id){
       return context.commit('getUserId', id)
+    },
+    setPlayMusic(context, picName){
+      return context.commit('getPlayMusic', picName)
     }
   }
 }

@@ -10,6 +10,7 @@
 
 <script>
 import axios from 'axios'
+import { Toast } from 'vant';
 
 export default {
     data() {
@@ -18,7 +19,7 @@ export default {
             listen: {
                 musicId:'',
                 musicPic:'',
-                url: '',
+                url: null,
                 musicName:''
             },
         }
@@ -58,7 +59,14 @@ export default {
                 this.MusicInfo = this.$store.state.user.musicInfo
             })
         },
-        updateMus(id){
+        // 获取音乐信息，并且存入vuex，
+        updateMus(id ,url, name){
+            let picName = {
+                picUrl: url,
+                musicName: name,
+                musicId: id
+            }
+            this.$store.dispatch('setPlayMusic',picName)
             axios.post('/api/song/url?id=' + id,{
                 id: id
             }).then((res)=>{

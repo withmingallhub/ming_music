@@ -8,7 +8,7 @@
         </div>
         <div class="musicVideo" @click="goMusicInfo">
             <div style="width:100%;heigh:100%;" v-if="listen.musicPic">
-                <img class="musicImg musicImage" :src="listen.musicPic" alt="">
+                <img :class="imgShow === false ? 'musicImg musicImage' : 'musicImg'" :src="listen.musicPic" alt="">
                 <span style="float:left;margin-left:0.3rem;line-height:0.8rem;font-size:0.4rem;">{{ listen.musicName }}</span>
                 <van-icon v-if="audio.playShow" @click="playAudio" class="show" name="play-circle-o" />
                 <van-icon v-if="!audio.playShow" @click="pauseAudio" class="show" name="pause-circle-o" />   
@@ -40,6 +40,8 @@ export default {
             audio:{
                 playShow:false
             },
+            // img是否转动
+            imgShow:false,
             // 用户信息
             userInfo: {
 
@@ -65,36 +67,76 @@ export default {
             // },
     },
     mounted() {
-        
+        this.ifPlay()
     },
     methods:{
+        // 是否正在播放音乐，如果是，那么在底部显示
+        ifPlay(){
+            let audio = document.getElementById('audio')
+            if(audio.src){
+                this.listen.id = this.$store.state.user.playMusic.musicId
+                this.listen.musicPic = this.$store.state.user.playMusic.picUrl
+                this.listen.musicName = this.$store.state.user.playMusic.musicName
+                if(audio.paused){
+                    this.audio.playShow = true
+                    this.imgShow = true
+                }
+                else{
+                    this.audio.playShow = false
+                }
+            }
+        },
         // 从歌单中获取现在要播放歌曲的id，并且请求接口获取播放url
         updateMusic(id, url, name){
-            this.listen.musicPic = url
-            this.listen.musicName = name
-            this.$emit('listengetid',id)
+            this.listen.id = id
+            if(this.$store.state.user.playMusic.musicId === id){
+                this.playAudio()
+            }
+            else{
+                this.listen.musicPic = url
+                this.listen.musicName = name
+                this.$emit('listengetid',id, url, name)
+                // 切换音乐图片转动
+                this.imgShow = false
+                this.runPic()
+                this.audio.playShow = false
+            }
         },
         // 到播放音乐详细页面，有歌词啥的
         goMusicInfo(){
+            if(this.listen.musicPic)
             this.$router.push({path:'/musicMore',query:{musicId:this.listen.id}})
         },
         // 进行播放歌曲
         playAudio(){
-            let img = document.getElementsByClassName('musicImg')[0]
-            img.style.animationPlayState = 'running'
+            // 从别的页面返回的时候歌曲暂停，点击播放那么需要图片转动
+            if(this.imgShow === true)
+            this.imgShow = false
+            this.runPic()
             this.audio.playShow = false
             let audio = document.getElementById('audio')
             audio.play()
+            // 阻止冒泡事件
             window.event.cancelBubble = true
         },
         // 暂停歌曲
         pauseAudio(){
-            let img = document.getElementsByClassName('musicImg')[0]
-            img.style.animationPlayState = 'paused'
+            this.pausePic()
             let audio = document.getElementById('audio')
             audio.pause()
             this.audio.playShow = true
+            // 阻止冒泡事件
             window.event.cancelBubble = true
+        },
+        // 暂停图片动画
+        pausePic(){
+            let img = document.getElementsByClassName('musicImg')[0]
+            img.style.animationPlayState = 'paused'
+        },
+        // 继续图片动画
+        runPic(){
+            let img = document.getElementsByClassName('musicImg')[0]
+            img.style.animationPlayState = 'running'
         }
     }
 }

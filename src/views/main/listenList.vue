@@ -18,6 +18,7 @@
 
 <script>
 import axios from 'axios'
+import { Toast } from 'vant'
 
 export default {
     data(){
@@ -44,8 +45,16 @@ export default {
         },
         // 向父级组件传递点击歌曲的id，这个id是歌曲id
         getmusics(li, item){
-            this.mlist1 = item
-            this.$emit('getid',li.id,li.al.picUrl,li.name)    
+            axios.post('/api/song/url?id=' + li.id,{
+                id: li.id
+            }).then((res)=>{
+                if(!res.data.data[0].url)
+                Toast('暂无版权，或权限不足')
+                else{
+                    this.mlist1 = item
+                    this.$emit('getid',li.id,li.al.picUrl,li.name)    
+                }
+            })
             // console.log(li.al)
             // this.$router.push({path:'/listenMusic',query:{id:li.al.id}})
         },
