@@ -87,7 +87,7 @@ export default {
             }
         },
         // 从歌单中获取现在要播放歌曲的id，并且请求接口获取播放url
-        updateMusic(id, url, name){
+        updateMusic(id, url, name, item, dt){
             this.listen.id = id
             if(this.$store.state.user.playMusic.musicId === id){
                 this.playAudio()
@@ -95,7 +95,7 @@ export default {
             else{
                 this.listen.musicPic = url
                 this.listen.musicName = name
-                this.$emit('listengetid',id, url, name)
+                this.$emit('listengetid',id, url, name, item, dt)
                 // 切换音乐图片转动
                 this.imgShow = false
                 this.runPic()

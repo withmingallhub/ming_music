@@ -1,7 +1,7 @@
 
 <template>
     <div>
-        <audio id="audio" ref="audio"  :src="listen.url" autoplay="autoplay">
+        <audio id="audio" ref="audio" @ended="audioEnd()"  :src="listen.url" autoplay="autoplay" @timeupdate="updateTime">
                 Your browser does not support the audio element.
         </audio>
         <router-view @listengetid="updateMus"></router-view>
@@ -20,14 +20,72 @@ export default {
                 musicId:'',
                 musicPic:'',
                 url: null,
-                musicName:''
+                musicName:'',
+                i:''
             },
+            playList:[],
+            currentTime:0,
         }
+    },
+    watch: {
+        
     },
     mounted() {
         this.checkLogin()
     },
     methods: {
+        updateTime(e){
+            this.currentTime = e.target.currentTime;    // 获取当前播放时间段
+        },
+        // 当这个音乐播放完毕，根据播放类型，选择‘单曲循环’，‘列表循环’，‘随机播放’
+        audioEnd(){
+            this.playList = this.$store.state.user.playList
+            let type = this.$store.state.user.listenType
+            if(type == '1')
+                // 默认为列表循环
+                this.nextMusic()
+            else if(type == '3')
+                // 当为2时，单曲循环
+                this.oneMusic()
+            else if(type == '2')
+                // 3的时候随机播放
+                this.randomMusic()
+        }, 
+        // 默认为列表循环
+        nextMusic(){
+            if(this.listen.i === this.playList.length - 1){
+                this.listen.i = 0
+                this.changeMusic1(this.listen.i, 'bottom')
+            }
+            else{
+                this.listen.i += 1
+                this.changeMusic1(this.listen.i, 'bottom')
+            }
+        },
+        changeMusic1(i,is){
+            const that = this
+            axios.post('/api/song/url?id=' + this.playList[i].id).then((res)=>{
+                console.log(res)
+                if(res.data.data[0].url == null){
+                    that.nextMusic()
+                }
+                else
+                    this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i)
+            })
+        },
+        // 当为2时，单曲循环
+        oneMusic(){
+            console.log('单曲循环')
+            axios.post('/api/song/url?id=' + this.$store.state.user.playList[this.listen.i].id,{
+                id: this.$store.state.user.playList[this.listen.i].id
+            }).then((res)=>{
+                this.listen.url = res.data.data[0].url
+            })
+        },
+        // 3的时候随机播放
+        randomMusic(){
+            console.log('随机播放')
+        },
         // mounted加载完毕检查登录
         checkLogin(){
             const that = this
@@ -60,19 +118,24 @@ export default {
             })
         },
         // 获取音乐信息，并且存入vuex，
-        updateMus(id ,url, name){
+        updateMus(id ,url, name, item, dt){
             let picName = {
                 picUrl: url,
                 musicName: name,
-                musicId: id
+                musicId: id,
+                i:item,
+                musicLong: dt
             }
             this.$store.dispatch('setPlayMusic',picName)
             axios.post('/api/song/url?id=' + id,{
                 id: id
             }).then((res)=>{
-                this.listen.url = res.data.data[0].url
-                if(this.listen.url == null)
+                if(res.data.data[0].url == null)
                 Toast('获取音乐失败，可能暂无版权')
+                else{
+                    this.listen.url = res.data.data[0].url
+                    this.listen.i = item
+                }
             })
         }
     },

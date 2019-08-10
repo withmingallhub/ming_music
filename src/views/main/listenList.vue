@@ -43,7 +43,7 @@ export default {
                 console.log(this.list)
             })
         },
-        // 向父级组件传递点击歌曲的id，这个id是歌曲id
+        // 向父级组件传递点击歌曲的id，这个id是歌曲id,并且减正在播放音乐的列表存在vuex中
         getmusics(li, item){
             axios.post('/api/song/url?id=' + li.id,{
                 id: li.id
@@ -51,8 +51,9 @@ export default {
                 if(!res.data.data[0].url)
                 Toast('暂无版权，或权限不足')
                 else{
+                    this.$store.dispatch('setPlayList', this.list)
                     this.mlist1 = item
-                    this.$emit('getid',li.id,li.al.picUrl,li.name)    
+                    this.$emit('getid',li.id,li.al.picUrl,li.name, item, li.dt)    
                 }
             })
             // console.log(li.al)
