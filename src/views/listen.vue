@@ -1,10 +1,10 @@
 
 <template>
     <div>
-        <audio id="audio" ref="audio" @ended="audioEnd()"  :src="listen.url" autoplay="autoplay" @timeupdate="updateTime">
+        <audio id="audio" ref="audio" @ended="audioEnd()" :src="listen.url" autoplay="autoplay" @timeupdate="updateTime">
                 Your browser does not support the audio element.
         </audio>
-        <router-view @listengetid="updateMus"></router-view>
+        <router-view @listengetid="updateMus" v-model="currentTime" :changeI="listen.i"></router-view>
     </div>
 </template>
 
@@ -24,11 +24,14 @@ export default {
                 i:''
             },
             playList:[],
-            currentTime:0,
+            currentTime:Number,
         }
     },
     watch: {
-        
+        // currentTime: function(newlong, oldlong){
+        //     let audio = document.getElementById('audio')
+        //     // audio.currentTime = this.currentTime
+        // }
     },
     mounted() {
         this.checkLogin()
@@ -67,24 +70,33 @@ export default {
             axios.post('/api/song/url?id=' + this.playList[i].id).then((res)=>{
                 console.log(res)
                 if(res.data.data[0].url == null){
-                    that.nextMusic()
+                    if(is == 'bottom')
+                        that.nextMusic()
+                    else if(is == 'random')
+                        that.randomMusic()
                 }
                 else
-                    this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i)
+                    // this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i,this.playList[i].dt)
+                    this.listen.musicId = this.playList[i].id
+                    this.listen.musicPic = this.playList[i].al.picUrl
+                    this.listen.musicName = this.playList[i].name
+                    this.listen.i = this.playList[i].dt
             })
         },
         // 当为2时，单曲循环
         oneMusic(){
-            console.log('单曲循环')
-            axios.post('/api/song/url?id=' + this.$store.state.user.playList[this.listen.i].id,{
-                id: this.$store.state.user.playList[this.listen.i].id
-            }).then((res)=>{
-                this.listen.url = res.data.data[0].url
-            })
+            let audio = document.getElementById('audio')
+            // 继续播放歌曲
+            audio.play()
         },
         // 3的时候随机播放
         randomMusic(){
             console.log('随机播放')
+            let long = this.$store.state.user.playList.length
+            console.log(long)
+            let i = parseInt(Math.random()*long)
+            console.log(i)
+            this.changeMusic1(i, 'random')
         },
         // mounted加载完毕检查登录
         checkLogin(){
@@ -95,9 +107,9 @@ export default {
                 that.musicInfo()
                 that.getInfo()
             }).catch(function(error){
-                if(error.response.data.code === 301){
+                // if(error.response.data.code === 301){
                     that.$router.push({path:'/Login'})
-                }
+                // }
             })
         },
         // 获取用户信息

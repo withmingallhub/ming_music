@@ -3,7 +3,7 @@
         <div>
             <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">{{list.name}}</li>
         </div>
-        <div>
+        <div @click="tuichu">
             我的电台
         </div>
     </div>
@@ -26,6 +26,11 @@ export default {
         this.getMusicList()
     },
     methods: {
+        tuichu(){
+            axios.get('/login/status').then((res)=>{
+                console.log('退出登录')
+            })
+        },
         getMusicList(){
             const that = this
             axios.get('/api/login/status').then((res)=>{

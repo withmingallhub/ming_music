@@ -8,12 +8,17 @@
         <div style="width:100%;">
             <img :class="showImg === false ? 'musicImg1 musicImage1' : 'musicImg1'" :src="playMusic.img" alt="">
         </div>
-        <div style="width:90%;position:relative;left:5%;height:1rem;">
+        <div style="width:90%;position:relative;left:5%;height:0.3rem;">
+            <!-- vant ui的进度条 -->
             <van-slider
             v-model="playLong"
             bar-height="2px"
             active-color="#1989fa"
+            @change="getlong()"
             />
+        </div>
+        <div style="margin-bottom:0.5rem;">
+            <span>{{ playTime }} / {{ musicTime }}</span>
         </div>
         <div>
             <van-icon @click="musicUp" class="show2" name="arrow-left" />
@@ -26,6 +31,7 @@
             <i @click="oneMusic" v-if="listenType == '1'" class="fa fa-refresh" ></i>
             <i @click="randomMusic" v-if="listenType == '3'" class="fa fa-undo" ></i>
         </div>
+        <div>{{ musicLong }}</div>
     </div>
 </template>
 
@@ -49,23 +55,53 @@ export default {
             audio: {
                 playShow:''
             },
+            // 正在播放的百分比
             playLong: 0,
-            musicLong:Number,
+            // 真在播放音乐的时长
+            musiclong:Number,
+            musicTime:'',
+            // 正在播放音乐的进度，转换为时间
+            playTime:'',
             showImg:true,
             playList: [],
             listenType:'',
         }
     },
+    watch: {
+        // 获取到播放进度改变时，同时改变进度条的进度
+        musicLong: function(newlong, oldlong){
+            let min = Math.floor(newlong/60)
+            if((min/10)<1) min = '0' + min
+            let miao = Math.floor(newlong%60)
+            if((miao/10)<1) miao = '0' + miao
+            this.playTime = min + ':' + miao
+            this.playLong = (newlong / this.musiclong) * 100
+        },
+        changeI:function(newI, oldI){
+            console.log(newI)
+            this.changeMusic(newI)
+        }
+    },
+    model: {
+        prop: 'musicLong',
+        event: 'parent-long'
+    },
+    props:{
+        // 正在播放的进度
+        musicLong: Number,
+        changeI:Number
+    },
     mounted() {
-        this.playMusic.musicId = this.$route.query.musicId
-        this.playList = this.$store.state.user.playList
-        this.listenType = this.$store.state.user.listenType
-        this.musicLong = this.$store.state.user.playMusic.musicLong / 100
         // 初始化播放音乐的信息
         this.writeInfo()
         this.ifPlay()
     },
     methods:{
+        getlong(){
+            let musicLong = (this.playLong * this.musiclong) / 100
+            let audio = document.getElementById('audio')
+            audio.currentTime = musicLong
+        },
         // 是否正在播放音乐，如果是，那么在底部显示
         ifPlay(){
             let audio = document.getElementById('audio')
@@ -108,17 +144,37 @@ export default {
         goUp(){
             history.go(-1)
         },
+        // 切换下一首，更新本页面内的内容
+        setInfo(){
+            this.musiclong = this.$store.state.user.playMusic.musicLong / 1000
+            let min = Math.floor(this.musiclong/60)
+            if((min/10)<1) min = '0' + min
+            let miao = Math.floor(this.musiclong%60)
+            if((miao/10)<1) miao = '0' + miao
+            this.musicTime = min + ':' + miao
+        },
         // 初始化播放音乐的信息
         writeInfo(){
+            this.listenType = this.$store.state.user.listenType
             if(!this.$store.state.user.listenType){
                 this.listenType = '1'
                 this.$store.state.user.listenType = '1'
             }
+            // 获取音乐id，歌单列表，音乐的时间
+            this.playMusic.musicId = this.$store.state.user.playMusic.musicId
+            this.playList = this.$store.state.user.playList
+            this.musiclong = this.$store.state.user.playMusic.musicLong / 1000
+            let min = Math.floor(this.musiclong/60)
+            if((min/10)<1) min = '0' + min
+            let miao = Math.floor(this.musiclong%60)
+            if((miao/10)<1) miao = '0' + miao
+            this.musicTime = min + ':' + miao
+            // 请求接口获取该音乐的具体信息
             axios.post('/api/song/detail?ids=' + this.playMusic.musicId,{
                 id: this.playMusic.musicId
             }).then((res)=>{
                 console.log(res.data.songs[0])
-                this.playMusic.musicName = res.data.songs[0].al.name
+                this.playMusic.musicName = res.data.songs[0].name
                 this.playMusic.img = res.data.songs[0].al.picUrl
                 this.playMusic.i = this.$store.state.user.playMusic.i
                 let info = res.data.songs[0].ar
@@ -167,9 +223,11 @@ export default {
         // 切换上一首或者下一首的id发送给listen父级，进行播放
         changeMusic(i){
             this.playMusic.musicId = this.playList[i].id
+            this.setInfo()
             axios.post('/api/song/detail?ids=' + this.playList[i].id,{
                 id: this.playList[i].id
             }).then((res)=>{
+                // console.log(res.data.song[0])
                 this.playMusic.musicName = res.data.songs[0].al.name
                 this.playMusic.img = res.data.songs[0].al.picUrl
                 let info = res.data.songs[0].ar
@@ -177,14 +235,15 @@ export default {
                 for(let i = 1;i < info.length; i ++){
                     this.playMusic.write = this.playMusic.write + '/' + info[i].name
                 }
-                this.$emit('listengetid',this.playMusic.musicId, this.playMusic.img, this.playMusic.musicName, this.playMusic.i)
+                this.$emit('listengetid',this.playMusic.musicId, this.playMusic.img, this.playMusic.musicName, this.playMusic.i,res.data.songs[0].dt)
+                this.setInfo()
             })
         },
         // 顺序播放
         nextMusic(){
-            this.listenType = '2'
-            this.$store.state.user.listenType = '2'
-            Toast('循序播放')
+            this.listenType = '1'
+            this.$store.state.user.listenType = '1'
+            Toast('顺序播放')
         },
         // 单曲循环
         oneMusic(){
@@ -194,8 +253,8 @@ export default {
         },
         // 随机播放
         randomMusic(){
-            this.listenType = '1'
-            this.$store.state.user.listenType = '1'
+            this.listenType = '2'
+            this.$store.state.user.listenType = '2'
             Toast('随机播放')
         }
     }
@@ -218,7 +277,8 @@ export default {
     margin-top: 1rem;
     margin-bottom: 1rem;
     margin-left:0rem;
-    width: 90%;
+    width: 8.5rem;
+    height: 8.5rem;
     border: 0.7rem solid black;
     border-radius: 50%;
 }
