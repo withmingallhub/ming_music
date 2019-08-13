@@ -223,7 +223,7 @@ export default {
         // 切换上一首或者下一首的id发送给listen父级，进行播放
         changeMusic(i){
             this.playMusic.musicId = this.playList[i].id
-            this.setInfo()
+            console.log(i)
             axios.post('/api/song/detail?ids=' + this.playList[i].id,{
                 id: this.playList[i].id
             }).then((res)=>{
