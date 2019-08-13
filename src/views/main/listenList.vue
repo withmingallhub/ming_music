@@ -29,8 +29,8 @@ export default {
             top:'',
             // 歌单列表信息
             list: [],
+            // 正在播放音乐名称高亮的索引
             mlist1:'',
-            item:''
         }
     },
     methods: {
@@ -43,7 +43,7 @@ export default {
                 console.log(this.list)
             })
         },
-        // 向父级组件传递点击歌曲的id，这个id是歌曲id,并且减正在播放音乐的列表存在vuex中
+        // 向父级组件传递点击歌曲的id，这个id是歌曲id,并且将正在播放音乐的列表存在vuex中
         getmusics(li, item){
             axios.post('/api/song/url?id=' + li.id,{
                 id: li.id
@@ -52,16 +52,24 @@ export default {
                 Toast('暂无版权，或权限不足')
                 else{
                     this.$store.dispatch('setPlayList', this.list)
+                    this.$store.dispatch('setlistId', this.id)
                     this.mlist1 = item
-                    this.$emit('getid',li.id,li.al.picUrl,li.name, item, li.dt)    
+                    this.$emit('getid',li.id,li.al.picUrl,li.name, item, li.dt)
                 }
             })
-            // console.log(li.al)
-            // this.$router.push({path:'/listenMusic',query:{id:li.al.id}})
         },
         // 点击返回，返回主页
         goMain(){
             this.$router.push({path:'/'})
+        },
+        // 获取正在播放歌曲的索引i，以此来设置正在播放音乐的高亮
+        getColor(){
+            let i = this.$store.state.user.playMusic.i
+            let id = this.$store.state.user.listId
+            console.log(i)
+            if(i && id == this.id){
+                this.mlist1 = i
+            }
         }
     },
     mounted() {
@@ -69,6 +77,7 @@ export default {
         this.id = this.$route.query.id
         this.top = this.$route.query.top
         this.getMusic()
+        this.getColor()
     },
 }
 </script>
@@ -93,8 +102,9 @@ export default {
     white-space:nowrap;
     text-align:left;
     padding-left: 0.3rem;
+    color: #65D25B;
     background: rgb(245, 245, 245);
-    border-left: 2px solid green;
+    border-left: 2px solid #65D25B;
 }
 .musicName{
     font-size: 0.4rem;

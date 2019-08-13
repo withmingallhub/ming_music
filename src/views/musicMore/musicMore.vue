@@ -77,10 +77,32 @@ export default {
             this.playTime = min + ':' + miao
             this.playLong = (newlong / this.musiclong) * 100
         },
-        changeI:function(newI, oldI){
-            console.log(newI)
+        changeI:function (newI, oldI) {
+            console.log("改变后的i")
+            // const that = this
+            // const i = newI
+            // console.log(this.playMusic)
+            // console.log(i,this.$store.state.user.playList,888)
+            // console.log(this.$store.state.user.playList[i],999)
             this.changeMusic(newI)
-        }
+            // this.playMusic.musicId = this.$store.state.user.playList[i].id
+            // console.log(that.playList[i].id)
+            // console.log(i)
+            // axios.post('/api/song/detail?ids=' + that.playList[i].id,{
+            //     id: that.playList[i].id
+            // }).then(function(res){
+            //     // console.log(res.data.song[0])
+            //     that.playMusic.musicName = res.data.songs[0].al.name
+            //     that.playMusic.img = res.data.songs[0].al.picUrl
+            //     let info = res.data.songs[0].ar
+            //     that.playMusic.write = info[0].name
+            //     for(let i = 1;i < info.length; i ++){
+            //         that.playMusic.write = that.playMusic.write + '/' + info[i].name
+            //     }
+            //     that.$emit('listengetid',that.playMusic.musicId, that.playMusic.img, that.playMusic.musicName, i,res.data.songs[0].dt)
+            //     that.setInfo()
+            // })
+        },
     },
     model: {
         prop: 'musicLong',
@@ -162,6 +184,7 @@ export default {
             }
             // 获取音乐id，歌单列表，音乐的时间
             this.playMusic.musicId = this.$store.state.user.playMusic.musicId
+            if(!this.playMusic.musicId) this.$router.push({path:'/'})
             this.playList = this.$store.state.user.playList
             this.musiclong = this.$store.state.user.playMusic.musicLong / 1000
             let min = Math.floor(this.musiclong/60)
@@ -208,7 +231,7 @@ export default {
         },
         changeMusic1(i,is){
             const that = this
-            axios.post('/api/song/url?id=' + this.playList[i].id).then((res)=>{
+            axios.post('/api/song/url?id=' + this.playList[i].id).then(function(res){
                 console.log(res)
                 if(res.data.data[0].url == null){
                     if(is == 'up')
@@ -217,12 +240,13 @@ export default {
                         that.musicBottom()
                 }
                 else
-                    this.changeMusic(i)
+                    that.changeMusic(i)
             })
         },
         // 切换上一首或者下一首的id发送给listen父级，进行播放
         changeMusic(i){
-            this.playMusic.musicId = this.playList[i].id
+            this.playMusic.musicId = this.$store.state.user.playList[i].id
+            console.log(this.playList[i].id)
             console.log(i)
             axios.post('/api/song/detail?ids=' + this.playList[i].id,{
                 id: this.playList[i].id
@@ -235,7 +259,7 @@ export default {
                 for(let i = 1;i < info.length; i ++){
                     this.playMusic.write = this.playMusic.write + '/' + info[i].name
                 }
-                this.$emit('listengetid',this.playMusic.musicId, this.playMusic.img, this.playMusic.musicName, this.playMusic.i,res.data.songs[0].dt)
+                this.$emit('listengetid',this.playMusic.musicId, this.playMusic.img, this.playMusic.musicName, i,res.data.songs[0].dt)
                 this.setInfo()
             })
         },

@@ -65,24 +65,6 @@ export default {
                 this.changeMusic1(this.listen.i, 'bottom')
             }
         },
-        changeMusic1(i,is){
-            const that = this
-            axios.post('/api/song/url?id=' + this.playList[i].id).then((res)=>{
-                console.log(res)
-                if(res.data.data[0].url == null){
-                    if(is == 'bottom')
-                        that.nextMusic()
-                    else if(is == 'random')
-                        that.randomMusic()
-                }
-                else
-                    // this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i,this.playList[i].dt)
-                    this.listen.musicId = this.playList[i].id
-                    this.listen.musicPic = this.playList[i].al.picUrl
-                    this.listen.musicName = this.playList[i].name
-                    this.listen.i = this.playList[i].dt
-            })
-        },
         // 当为2时，单曲循环
         oneMusic(){
             let audio = document.getElementById('audio')
@@ -93,17 +75,36 @@ export default {
         randomMusic(){
             console.log('随机播放')
             let long = this.$store.state.user.playList.length
-            console.log(long)
             let i = parseInt(Math.random()*long)
-            console.log(i)
-            this.changeMusic1(i, 'random')
+            if(i != this.listen.i){
+                this.listen.i = i
+                this.changeMusic1(this.listen.i, 'random')
+            }
+            else this.randomMusic()
+        },
+        changeMusic1(i,is){
+            const that = this
+            axios.post('/api/song/url?id=' + that.playList[i].id).then(function(res){
+                console.log(res)
+                if(res.data.data[0].url == null){
+                    if(is == 'bottom')
+                        that.nextMusic()
+                    else if(is == 'random')
+                        that.randomMusic()
+                }
+                else
+                    // this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i,this.playList[i].dt)
+                    that.listen.musicId = that.playList[i].id
+                    that.listen.musicPic = that.playList[i].al.picUrl
+                    that.listen.musicName = that.playList[i].name
+            })
         },
         // mounted加载完毕检查登录
         checkLogin(){
             const that = this
-            axios.get('/api/login/status').then((res)=>{
+            axios.get('/api/login/status').then(function(res){
                 that.userId = res.data.profile.userId
-                this.$store.dispatch('setUserId',that.userId)
+                that.$store.dispatch('setUserId',that.userId)
                 that.musicInfo()
                 that.getInfo()
             }).catch(function(error){
@@ -114,23 +115,26 @@ export default {
         },
         // 获取用户信息
         getInfo(){
-            axios.post('/api/user/detail?uid=' + this.userId,{
-                uid:this.userId
-            }).then((res)=>{
-                this.$store.dispatch('addnumbers',res.data)
-                this.userInfo = this.$store.state.user.userInfo
+            const that = this
+            axios.post('/api/user/detail?uid=' + that.userId,{
+                uid:that.userId
+            }).then(function(res){
+                that.$store.dispatch('addnumbers',res.data)
+                that.userInfo = that.$store.state.user.userInfo
             })
         },
         musicInfo(){
-            axios.post('/api/user/playlist?uid=' + this.userId,{
-                uid:this.userId
-            }).then((res)=>{
-                this.$store.dispatch('getMusicIn',res.data)
-                this.MusicInfo = this.$store.state.user.musicInfo
+            const that = this
+            axios.post('/api/user/playlist?uid=' + that.userId,{
+                uid:that.userId
+            }).then(function(res){
+                that.$store.dispatch('getMusicIn',res.data)
+                that.MusicInfo = that.$store.state.user.musicInfo
             })
         },
         // 获取音乐信息，并且存入vuex，
         updateMus(id ,url, name, item, dt){
+            const that = this
             let picName = {
                 picUrl: url,
                 musicName: name,
@@ -138,15 +142,15 @@ export default {
                 i:item,
                 musicLong: dt
             }
-            this.$store.dispatch('setPlayMusic',picName)
+            that.$store.dispatch('setPlayMusic',picName)
             axios.post('/api/song/url?id=' + id,{
                 id: id
-            }).then((res)=>{
+            }).then(function(res){
                 if(res.data.data[0].url == null)
                 Toast('获取音乐失败，可能暂无版权')
                 else{
-                    this.listen.url = res.data.data[0].url
-                    this.listen.i = item
+                    that.listen.url = res.data.data[0].url
+                    that.listen.i = item
                 }
             })
         }

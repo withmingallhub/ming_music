@@ -19,6 +19,9 @@ export default {
       i:'',
       musicLong: ''
     },
+    // 正砸播放歌单的id
+    listId:'',
+    // 正在播放的歌单
     playList:[],
     listenType:'1'
   },
@@ -40,6 +43,9 @@ export default {
     },
     getlistenType(state, type){
       state.listenType = type
+    },
+    getlistId(state, type){
+      state.listId = type
     }
   },
   getters: {
@@ -63,6 +69,9 @@ export default {
     },
     setlistenType(context, type){
       return context.commit('getlistenType', type)
+    },
+    setlistId(context, listeId){
+      return context.commit('getlistId', listeId)
     }
   }
 }
