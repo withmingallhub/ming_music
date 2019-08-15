@@ -85,7 +85,6 @@ export default {
         changeMusic1(i,is){
             const that = this
             axios.post('/api/song/url?id=' + that.playList[i].id).then(function(res){
-                console.log(res)
                 if(res.data.data[0].url == null){
                     if(is == 'bottom')
                         that.nextMusic()

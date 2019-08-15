@@ -7,7 +7,7 @@
         <div style="height:1.2rem;">
 
         </div>
-        <div>
+        <div style="margin-bottom:1rem;">
             <li :class="mlist1 === item ? 'playMlist' : 'mlist'" @click="getmusics(li, item)" v-for="(li ,item) in list" :key="item">
                 <span class="musicName" style="margin-right:0.2rem;">{{li.name}}</span>
                 <span style="margin-left:0.2rem;line-height:1.2rem;" v-for="(name, item1) in li.ar" :key="item1">{{ name.name }}</span>
@@ -32,6 +32,14 @@ export default {
             // 正在播放音乐名称高亮的索引
             mlist1:'',
         }
+    },
+    watch: {
+        updateone: function(newone,oldone){
+            this.mlist1 = newone
+        }
+    },
+    props:{
+        updateone:''
     },
     methods: {
         // mounted进行请求，获取歌曲列表每首歌曲信息,这个发送的id是歌单id
@@ -66,8 +74,8 @@ export default {
         getColor(){
             let i = this.$store.state.user.playMusic.i
             let id = this.$store.state.user.listId
-            console.log(i)
-            if(i && id == this.id){
+            console.log("正在播放的索引",i)
+            if(i !== null && id == this.id){
                 this.mlist1 = i
             }
         }

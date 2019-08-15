@@ -4,12 +4,12 @@
             <span style="font-size:0.4rem;">头部</span>
         </div>
         <div style="min-height:10rem;width:100%;margin-top:1.2rem;">
-            <router-view @getid="updateMusic"></router-view>
+            <router-view @getid="updateMusic" :updateone="changeI"></router-view>
         </div>
         <div class="musicVideo" @click="goMusicInfo">
             <div style="width:100%;heigh:100%;" v-if="listen.musicPic">
                 <img :class="imgShow === false ? 'musicImg musicImage' : 'musicImg'" :src="listen.musicPic" alt="">
-                <span style="float:left;margin-left:0.3rem;line-height:0.8rem;font-size:0.4rem;">{{ listen.musicName }}</span>
+                <span style="float:left;margin-left:0.3rem;line-height:0.8rem;font-size:0.4rem;width:5rem;text-align:left;overflow:hidden;text-overflow: ellipsis;white-space:nowrap;">{{ listen.musicName }}</span>
                 <van-icon v-if="audio.playShow" @click="playAudio" class="show" name="play-circle-o" />
                 <van-icon v-if="!audio.playShow" @click="pauseAudio" class="show" name="pause-circle-o" />   
             </div>
@@ -65,6 +65,15 @@ export default {
             //         img.classList.add("musicImage");
             //     }
             // },
+            changeI:function (newI, oldI) {
+            console.log("改变后的i")
+            console.log(newI)
+            let list = this.$store.state.user.playList
+            this.updateMusic(list[newI].id,list[newI].al.picUrl,list[newI].name,newI,list[newI].dt)
+        },
+    },
+    props:{
+        changeI:''
     },
     mounted() {
         this.ifPlay()

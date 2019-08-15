@@ -3,6 +3,7 @@ import SignUp from '@/views/SignUp/SignUp'
 import Login from '@/views/login/login'
 import main from '@/views/main/main'
 import musicMore from '@/views/musicMore/musicMore'
+import musicComment from '@/views/musicMore/musicComment'
 import listenList from '@/views/main/listenList'
 import Layout from '@/views/Layout'
 import listen from '@/views/listen'
@@ -31,6 +32,10 @@ export default[
                 path: '/musicMore',
                 component: musicMore
             },
+            {
+                path: '/musicComment',
+                component: musicComment
+            }
         ]
     },
     {
