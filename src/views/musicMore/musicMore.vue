@@ -24,7 +24,7 @@
                     <i @click="randomMusic" v-if="listenType == '3'" class="fa fa-undo" ></i>
                 </div>
                 <div style="float:left;line-height:1.2rem;margin-left:1.4rem;">
-                    <van-icon class="loveLogo" name="like-o" />
+                    <van-icon @click="changeShow" class="loveLogo" name="like-o" />
                     <van-action-sheet
                     v-model="show"
                     :actions="List"
@@ -324,6 +324,9 @@ export default {
             this.listenType = '2'
             this.$store.state.user.listenType = '2'
             Toast('随机播放')
+        },
+        changeShow(){
+            this.show = true
         },
         //  将歌曲添加到歌单
         onSelect(item){
