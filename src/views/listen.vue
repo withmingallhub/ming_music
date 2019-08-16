@@ -34,7 +34,6 @@ export default {
         // }
     },
     mounted() {
-        this.checkLogin()
     },
     methods: {
         updateTime(e){
@@ -96,39 +95,6 @@ export default {
                     that.listen.musicId = that.playList[i].id
                     that.listen.musicPic = that.playList[i].al.picUrl
                     that.listen.musicName = that.playList[i].name
-            })
-        },
-        // mounted加载完毕检查登录
-        checkLogin(){
-            const that = this
-            axios.get('/api/login/status').then(function(res){
-                that.userId = res.data.profile.userId
-                that.$store.dispatch('setUserId',that.userId)
-                that.musicInfo()
-                that.getInfo()
-            }).catch(function(error){
-                // if(error.response.data.code === 301){
-                    that.$router.push({path:'/Login'})
-                // }
-            })
-        },
-        // 获取用户信息
-        getInfo(){
-            const that = this
-            axios.post('/api/user/detail?uid=' + that.userId,{
-                uid:that.userId
-            }).then(function(res){
-                that.$store.dispatch('addnumbers',res.data)
-                that.userInfo = that.$store.state.user.userInfo
-            })
-        },
-        musicInfo(){
-            const that = this
-            axios.post('/api/user/playlist?uid=' + that.userId,{
-                uid:that.userId
-            }).then(function(res){
-                that.$store.dispatch('getMusicIn',res.data)
-                that.MusicInfo = that.$store.state.user.musicInfo
             })
         },
         // 获取音乐信息，并且存入vuex，

@@ -1,7 +1,69 @@
 <template>
     <div>
+        <van-popup 
+        v-model="show"
+        position="left"
+        :style="{height: '100%',width: '7rem'}"
+        >
+            <div :style="{height: '5rem',border:'1px solid black',backgroundImage: 'url(' + userInfo.profile.backgroundUrl + ')'}">
+                <img @click="changeInfo" :src="userInfo.profile.avatarUrl" style="height: 2rem;width:2rem;border-radius: 50%;margin-top: 0.5rem;margin-left: 0.3rem;" alt="">
+                <br>
+                <br>
+                <br>
+                <span style="color: white">{{ userInfo.profile.nickname }}</span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
+                    我的关注
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="smile-o" /></span>
+                    推荐
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="chat" /></span>
+                    我的消息
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="eye" /></span>
+                    动态
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="underway-o" /></span>
+                    播放记录
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="exchange" /></span>
+                    更换手机
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="share" /></span>
+                    刷新登陆
+                </span>
+            </div>
+            <div style="height:1rem;width: 100%;border:1px solid black;">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
+                    退出登录
+                </span>
+            </div>
+        </van-popup>
         <div class="Top">
-            <span style="font-size:0.4rem;">头部</span>
+            <img @click="popup" :src="userInfo.profile.avatarUrl" style="height: 1rem;width:1rem;border-radius: 50%;float:left;margin-top: 0.1rem;margin-left: 0.3rem;" alt="">
+            <span style="font-size:0.4rem;clear: both;">头部</span>
         </div>
         <div style="min-height:10rem;width:100%;margin-top:1.2rem;">
             <router-view @getid="updateMusic" :updateone="changeI"></router-view>
@@ -44,11 +106,14 @@ export default {
             imgShow:false,
             // 用户信息
             userInfo: {
-
+                profile: {
+                    avatarUrl:''
+                }
             },
             MusicInfo: {
 
-            }
+            },
+            show: false
         }
     },
     watch: {
@@ -76,9 +141,43 @@ export default {
         changeI:''
     },
     mounted() {
+        this.checkLogin()
         this.ifPlay()
     },
     methods:{
+        // mounted加载完毕检查登录
+        checkLogin(){
+            const that = this
+            axios.get('/api/login/status').then(function(res){
+                that.userId = res.data.profile.userId
+                that.$store.dispatch('setUserId',that.userId)
+                that.musicInfo()
+                that.getInfo()
+            }).catch(function(error){
+                // if(error.response.data.code === 301){
+                    that.$router.push({path:'/Login'})
+                // }
+            })
+        },
+        // 获取用户信息
+        getInfo(){
+            const that = this
+            axios.post('/api/user/detail?uid=' + that.userId,{
+                uid:that.userId
+            }).then(function(res){
+                that.$store.dispatch('addnumbers',res.data)
+                that.userInfo = that.$store.state.user.userInfo
+            })
+        },
+        musicInfo(){
+            const that = this
+            axios.post('/api/user/playlist?uid=' + that.userId,{
+                uid:that.userId
+            }).then(function(res){
+                that.$store.dispatch('getMusicIn',res.data)
+                that.MusicInfo = that.$store.state.user.musicInfo
+            })
+        },
         // 是否正在播放音乐，如果是，那么在底部显示
         ifPlay(){
             let audio = document.getElementById('audio')
@@ -146,6 +245,13 @@ export default {
         runPic(){
             let img = document.getElementsByClassName('musicImg')[0]
             img.style.animationPlayState = 'running'
+        },
+        popup(){
+            this.show = true
+        },
+        changeInfo(){
+            console.log('修改信息')
+            this.$router.push({path: '/changeInfo',query:{userId: this.userId}})
         }
     }
 }

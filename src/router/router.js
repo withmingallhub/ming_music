@@ -4,6 +4,7 @@ import Login from '@/views/login/login'
 import main from '@/views/main/main'
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
+import changeInfo from '@/views/changeInfo/changeInfo'
 import listenList from '@/views/main/listenList'
 import Layout from '@/views/Layout'
 import listen from '@/views/listen'
@@ -15,7 +16,7 @@ export default[
         children: [
             {
                 path: '/',
-                name: 'Layout',
+                // name: 'Layout',
                 component: Layout,
                 children: [
                     {
@@ -35,6 +36,9 @@ export default[
             {
                 path: '/musicComment',
                 component: musicComment
+            },{
+                path: '/changeInfo',
+                component: changeInfo
             }
         ]
     },
