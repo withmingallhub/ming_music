@@ -12,49 +12,49 @@
                 <br>
                 <span style="color: white">{{ userInfo.profile.nickname }}</span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
                     我的关注
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="smile-o" /></span>
                     推荐
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="chat" /></span>
                     我的消息
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="eye" /></span>
                     动态
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="underway-o" /></span>
                     播放记录
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="exchange" /></span>
                     更换手机
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="share" /></span>
                     刷新登陆
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid black;">
+            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
                     退出登录
@@ -63,7 +63,12 @@
         </van-popup>
         <div class="Top">
             <img @click="popup" :src="userInfo.profile.avatarUrl" style="height: 1rem;width:1rem;border-radius: 50%;float:left;margin-top: 0.1rem;margin-left: 0.3rem;" alt="">
-            <span style="font-size:0.4rem;clear: both;">头部</span>
+            
+            <van-icon @click="search" class="search" name="search" />
+
+            <van-icon @click="changeTop('0')" :class="topIcon == 0 ? 'isIt' : 'topchange'" name="music-o" />
+            <van-icon @click="changeTop('1')" :class="topIcon == 1 ? 'isIt' : 'topchange'" name="service-o" />
+            <van-icon @click="changeTop('2')" :class="topIcon == 2 ? 'isIt' : 'topchange'" name="video-o" />
         </div>
         <div style="min-height:10rem;width:100%;margin-top:1.2rem;">
             <router-view @getid="updateMusic" :updateone="changeI"></router-view>
@@ -113,7 +118,9 @@ export default {
             MusicInfo: {
 
             },
-            show: false
+            show: false,
+            // 下来的是顶部导航栏
+            topIcon: 0
         }
     },
     watch: {
@@ -246,12 +253,27 @@ export default {
             let img = document.getElementsByClassName('musicImg')[0]
             img.style.animationPlayState = 'running'
         },
+        // 侧边弹出层是否出现
         popup(){
             this.show = true
         },
+        // 我的信息页面
         changeInfo(){
-            console.log('修改信息')
             this.$router.push({path: '/changeInfo',query:{userId: this.userId}})
+        },
+        // 搜索
+        search(){
+            this.$router.push({path: '/search'})
+        },
+        // 顶部导航栏
+        changeTop(item){
+            this.topIcon = item
+            if(item == 0)
+                this.$router.push({path: '/'})
+            else if(item == 1)
+                this.$router.push({path: '/broadStation'})
+            else if(item == 2)
+                this.$router.push({path: '/MV'})
         }
     }
 }
@@ -261,10 +283,27 @@ export default {
 .Top{
     height: 1.2rem;
     width:100%;
-    background: white;
+    background: rgb(25, 181, 254);
     position: fixed;
     top:0rem;
-    border: 1px solid black;
+}
+.topchange {
+    color: rgb(235, 235, 225);
+    font-size:0.6rem;
+    line-height: 1.1rem;
+    margin-left:0.3rem;
+}
+.isIt {
+    color: white;
+    font-size:0.6rem;
+    line-height: 1.1rem;
+    margin-left:0.3rem;
+}
+.search {
+    font-size: 0.6rem;
+    float:right;
+    margin-right:0.5rem;
+    line-height:1rem;
 }
 .musicVideo{
     height:1.2rem;

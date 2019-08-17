@@ -5,6 +5,9 @@ import main from '@/views/main/main'
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
 import changeInfo from '@/views/changeInfo/changeInfo'
+import broadStation from '@/views/broadStation/broadStation'
+import MV from '@/views/MV/MV'
+import search from '@/views/search/search'
 import listenList from '@/views/main/listenList'
 import Layout from '@/views/Layout'
 import listen from '@/views/listen'
@@ -27,6 +30,14 @@ export default[
                         path: '/listenList',
                         component: listenList
                     },
+                    {
+                        path: '/broadStation',
+                        component: broadStation
+                    },
+                    {
+                        path: '/MV',
+                        component: MV
+                    }
                 ]
             },
             {
@@ -39,6 +50,10 @@ export default[
             },{
                 path: '/changeInfo',
                 component: changeInfo
+            },
+            {
+                path: '/search',
+                component: search
             }
         ]
     },

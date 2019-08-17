@@ -1,11 +1,18 @@
 <template>
     <div>
-        <div style="background:white;overflow:hidden;height:1.2rem;text-align:center;position:fixed;width:100%;">
-            <van-icon @click="goMain" name="arrow-left" class="icon" />
+        <div style="background: rgba(0,0,0,0.8);overflow:hidden;height:1.2rem;text-align:center;">
+            <van-icon @click="goMain" name="arrow-left" class="iconlist" />
             <span class="topName">{{ top }}</span>
         </div>
-        <div style="height:1.2rem;">
-
+        <div style="height:5rem;background: rgba(0,0,0,0.8);">
+            <div style="width:100%;height:3rem;">
+                <img style="width:2.5rem;width:2.5rem;" :src="listImg" alt="">
+            </div>
+            <div style="width:100%;height:1.5rem;">
+                <span style="color: white;line-height:1rem;">创建人:</span>
+                <span style="color: white;line-height:1rem;">{{ nickname }}</span>
+                <img style="width:1rem;height: 1rem;border-radius:50%;position: realtive;top: 0.4rem;" :src="userImg" alt="">
+            </div>
         </div>
         <div style="margin-bottom:1rem;">
             <li :class="mlist1 === item ? 'playMlist' : 'mlist'" @click="getmusics(li, item)" v-for="(li ,item) in list" :key="item">
@@ -31,6 +38,9 @@ export default {
             list: [],
             // 正在播放音乐名称高亮的索引
             mlist1:'',
+            listImg: '',
+            userImg:'',
+            nickname:'',
         }
     },
     watch: {
@@ -48,7 +58,10 @@ export default {
                 id: this.id
             }).then((res)=>{
                 this.list = res.data.playlist.tracks
-                console.log(this.list)
+                this.listImg = res.data.playlist.coverImgUrl
+                this.nickname = res.data.playlist.creator.nickname
+                this.userImg = res.data.playlist.creator.avatarUrl
+                console.log(res)
             })
         },
         // 向父级组件传递点击歌曲的id，这个id是歌曲id,并且将正在播放音乐的列表存在vuex中
@@ -118,15 +131,17 @@ export default {
     font-size: 0.4rem;
     line-height: 1rem;
 }
-.icon{
+.iconlist{
     font-size: 0.5rem;
     float: left;
+    color: white;
     line-height: 1.2rem;
 }
 .topName{
+    color: azure;
     line-height: 1.2rem;
     font-size: 0.4rem;
     clear: both;
-    margin-left: -1rem;
+    margin-left: -0.4rem;
 }
 </style>

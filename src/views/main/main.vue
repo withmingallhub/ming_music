@@ -1,10 +1,10 @@
 <template>
     <div>
         <div>
-            <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">{{list.name}}</li>
-        </div>
-        <div @click="tuichu">
-            我的电台
+            <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">
+                <img style="width:1.3rem;height: 1.3rem;line-height:1.5rem;float:left;margin-left: 0.4rem;" :src="list.coverImgUrl" alt="">
+                <span style="line-height: 1.5rem;margin-left: -1.7rem;">{{list.name}}</span>
+            </li>
         </div>
     </div>
 </template>
@@ -24,11 +24,12 @@ export default {
     },
     mounted() {
         this.getMusicList()
+        this.getgouhao()
     },
     methods: {
-        tuichu(){
-            axios.get('/login/status').then((res)=>{
-                console.log('退出登录')
+        getgouhao(){
+            axios.get('/api/user/playlist?uid=48353&limit=1000').then((res)=>{
+                console.log(res)
             })
         },
         getMusicList(){
@@ -47,6 +48,7 @@ export default {
                 uid:this.userId
             }).then((res)=>{
                 this.musicList = res.data.playlist
+                console.log(res)
             })
         },
         getList(id,name){
@@ -60,7 +62,6 @@ export default {
 .musiclist{
     list-style: none;
     height: 1.5rem;
-    line-height: 1.5rem;
-    font-size: 0.5rem;
+    font-size: 0.4rem;
 }
 </style>
