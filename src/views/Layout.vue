@@ -141,6 +141,7 @@ export default {
             console.log("改变后的i")
             console.log(newI)
             let list = this.$store.state.user.playList
+            if(list[newI].al)
             this.updateMusic(list[newI].id,list[newI].al.picUrl,list[newI].name,newI,list[newI].dt)
         },
     },

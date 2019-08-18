@@ -2,7 +2,7 @@
     <div>
         <div style="background: rgba(0,0,0,0.8);overflow:hidden;height:1.2rem;text-align:center;">
             <van-icon @click="goMain" name="arrow-left" class="iconlist" />
-            <span class="topName">{{ top }}</span>
+            <span class="topNamelisten">{{ top }}</span>
         </div>
         <div style="height:5rem;background: rgba(0,0,0,0.8);">
             <div style="width:100%;height:3rem;">
@@ -137,7 +137,7 @@ export default {
     color: white;
     line-height: 1.2rem;
 }
-.topName{
+.topNamelisten{
     color: azure;
     line-height: 1.2rem;
     font-size: 0.4rem;

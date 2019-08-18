@@ -41,17 +41,21 @@ export default {
         },
         // 当这个音乐播放完毕，根据播放类型，选择‘单曲循环’，‘列表循环’，‘随机播放’
         audioEnd(){
-            this.playList = this.$store.state.user.playList
-            let type = this.$store.state.user.listenType
-            if(type == '1')
-                // 默认为列表循环
-                this.nextMusic()
-            else if(type == '3')
-                // 当为2时，单曲循环
-                this.oneMusic()
-            else if(type == '2')
-                // 3的时候随机播放
-                this.randomMusic()
+            if(this.$store.state.user.playList[0].al){
+                this.playList = this.$store.state.user.playList
+                let type = this.$store.state.user.listenType
+                if(type == '1')
+                    // 默认为列表循环
+                    this.nextMusic()
+                else if(type == '3')
+                    // 当为2时，单曲循环
+                    this.oneMusic()
+                else if(type == '2')
+                    // 3的时候随机播放
+                    this.randomMusic()
+            }
+            else this.oneMusic()
+
         }, 
         // 默认为列表循环
         nextMusic(){
@@ -92,6 +96,7 @@ export default {
                 }
                 else
                     // this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i,this.playList[i].dt)
+                    
                     that.listen.musicId = that.playList[i].id
                     that.listen.musicPic = that.playList[i].al.picUrl
                     that.listen.musicName = that.playList[i].name
@@ -116,6 +121,8 @@ export default {
                 else{
                     that.listen.url = res.data.data[0].url
                     that.listen.i = item
+                    that.listen.musicName = name
+                    that.listen.musicId = id
                 }
             })
         }

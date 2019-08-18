@@ -37,6 +37,10 @@ export default[
                     {
                         path: '/MV',
                         component: MV
+                    },
+                    {
+                        path: '/search',
+                        component: search
                     }
                 ]
             },
@@ -50,10 +54,6 @@ export default[
             },{
                 path: '/changeInfo',
                 component: changeInfo
-            },
-            {
-                path: '/search',
-                component: search
             }
         ]
     },

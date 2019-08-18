@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="pai">
+            <van-icon class="iconPai" name="bar-chart-o" />
+        </div>
         <div>
             <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">
                 <img style="width:1.3rem;height: 1.3rem;line-height:1.5rem;float:left;margin-left: 0.4rem;" :src="list.coverImgUrl" alt="">
@@ -63,5 +66,14 @@ export default {
     list-style: none;
     height: 1.5rem;
     font-size: 0.4rem;
+}
+.pai {
+    height: 5rem;
+    width: 100%;
+    padding-top: 0.7rem;
+    border: 1px solid black;
+}
+.iconPai {
+    font-size: 1rem;
 }
 </style>
