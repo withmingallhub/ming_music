@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div style="background: rgba(0,0,0,0.8);overflow:hidden;height:1.2rem;text-align:center;">
+        <div style="background: rgba(51,51,51);overflow:hidden;height:1.2rem;text-align:center;">
             <van-icon @click="goMain" name="arrow-left" class="iconlist" />
             <span class="topNamelisten">{{ top }}</span>
         </div>
-        <div style="height:5rem;background: rgba(0,0,0,0.8);">
+        <div style="height:5rem;background: rgba(51,51,51);">
             <div style="width:100%;height:3rem;">
                 <img style="width:2.5rem;width:2.5rem;" :src="listImg" alt="">
             </div>
             <div style="width:100%;height:1.5rem;">
                 <span style="color: white;line-height:1rem;">创建人:</span>
                 <span style="color: white;line-height:1rem;">{{ nickname }}</span>
-                <img style="width:1rem;height: 1rem;border-radius:50%;position: realtive;top: 0.4rem;" :src="userImg" alt="">
+                <img style="width:1rem;height: 1rem;border-radius:50%;position: relative;top: 0.4rem;" :src="userImg" alt="">
             </div>
         </div>
         <div style="margin-bottom:1rem;">

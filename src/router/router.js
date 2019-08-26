@@ -6,7 +6,12 @@ import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
 import changeInfo from '@/views/changeInfo/changeInfo'
 import broadStation from '@/views/broadStation/broadStation'
+import goclass from '@/views/broadStation/goclass'
+import getclass from '@/views/broadStation/getclass'
+import broadUserInfo from '@/views/broadStation/broadUserInfo'
 import MV from '@/views/MV/MV'
+import moreMV from '@/views/MV/moreMV'
+import playMV from '@/views/MV/playMV'
 import search from '@/views/search/search'
 import listenList from '@/views/main/listenList'
 import Layout from '@/views/Layout'
@@ -35,12 +40,28 @@ export default[
                         component: broadStation
                     },
                     {
+                        path: '/goclass',
+                        component: goclass
+                    },
+                    {
+                        path: '/getclass',
+                        component: getclass
+                    },
+                    {
                         path: '/MV',
                         component: MV
                     },
                     {
+                        path: '/moreMV',
+                        component: moreMV
+                    },
+                    {
                         path: '/search',
                         component: search
+                    },
+                    {
+                        path: '/broadUserInfo',
+                        component: broadUserInfo
                     }
                 ]
             },
@@ -51,10 +72,11 @@ export default[
             {
                 path: '/musicComment',
                 component: musicComment
-            },{
+            },
+            {
                 path: '/changeInfo',
                 component: changeInfo
-            }
+            },
         ]
     },
     {
@@ -64,6 +86,10 @@ export default[
     {
         path: '/Login',
         component: Login
+    },
+    {
+        path: '/playMV',
+        component: playMV
     }
     
 ]

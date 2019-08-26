@@ -156,6 +156,11 @@ export default {
         // mounted加载完毕检查登录
         checkLogin(){
             const that = this
+            if(this.$route.path == '/MV')
+                this.topIcon = '2'
+            else if(this.$route.path == '/broadStation')
+                this.topIcon = '1'
+            else this.topIcon = '0'
             axios.get('/api/login/status').then(function(res){
                 that.userId = res.data.profile.userId
                 that.$store.dispatch('setUserId',that.userId)

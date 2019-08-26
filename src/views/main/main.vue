@@ -1,7 +1,23 @@
 <template>
     <div>
         <div class="pai">
-            <van-icon class="iconPai" name="bar-chart-o" />
+            <div style="width: 25%;float: left;">
+                <van-icon class="iconPai" name="bar-chart-o" />
+                <p>排行</p>
+            </div>
+            <div style="width: 25%;float: left;">
+                <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-user-o"></i>
+                <p>歌手</p>
+            </div>
+            
+            <div style="width: 25%;float: left;">
+                <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-tasks"></i>
+                <p>歌单</p>
+            </div>
+            <div style="width: 25%;float: left;">
+                <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-dot-circle-o"></i>
+                <p>专辑</p>
+            </div>
         </div>
         <div>
             <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">
@@ -70,10 +86,13 @@ export default {
 .pai {
     height: 5rem;
     width: 100%;
+    overflow: hidden;
     padding-top: 0.7rem;
+    margin-bottom: 0.2rem;
     border: 1px solid black;
 }
 .iconPai {
     font-size: 1rem;
+    color: rgb(25, 181, 254)
 }
 </style>

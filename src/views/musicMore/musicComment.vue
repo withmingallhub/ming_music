@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="background:white;overflow:hidden;height:1.5rem;text-align:center;">
+        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(25, 181, 254);overflow:hidden;height:1.5rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="icon" />
             <span class="topName">{{ playMusic.musicName }}</span>
         </div>

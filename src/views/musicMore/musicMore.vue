@@ -1,10 +1,10 @@
 <template>
     <div style="width:100%;"  @touchmove.prevent>
-        <div style="background:white;overflow:hidden;height:2rem;text-align:center;">
+        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(25, 181, 254);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="icon" />
             <span class="topName">{{ playMusic.musicName }}</span>
-            <p>{{ playMusic.write }}</p>
         </div>
+        <p>{{ playMusic.write }}</p>
         <div ref="border" style="height:10.8rem;width:100%;overflow-x:hidden;overflow-y:scroll;text-align:center;">
             <div v-if="img" style="width:100%;">
                 <div v-if="!playMusic.img" class="musicImage1"></div>

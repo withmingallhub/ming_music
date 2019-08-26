@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="height: 1.2rem;width: 100%;background: rgb(25, 181, 254);">
+        <div style="border-top: 1px solid rgb(200,200,200);height: 1.2rem;width: 100%;background: rgb(25, 181, 254);">
             <van-icon @click="goUp" name="arrow-left" class="iconsearch" />
             <van-search 
             class="searchInput"
@@ -271,6 +271,18 @@ export default {
 .van-search__content div.van-cell__value div input{
     color: azure !important
 }
+.van-search__content div.van-cell__value div input::-webkit-input-placeholder{
+    color: rgba(250,250,250,0.7)
+}
+.van-search__content div.van-cell__value div input::-moz-placeholder{
+    color: white;
+}
+.van-search__content div.van-cell__value div input:-moz-placeholder{
+    color: white;
+}
+.van-search__content div.van-cell__value div input:-ms-input-placeholder{
+    color: white;
+}
 .hotOrNew {
     color: red;
 }
@@ -285,6 +297,9 @@ export default {
     background: rgb(237,237,237);
     float: left;
     margin-right: 1rem;
+}
+.searchInput {
+    margin-top: -0.1rem;
 }
 .searchIs{
     list-style: none;
