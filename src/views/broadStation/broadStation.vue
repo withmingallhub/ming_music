@@ -19,7 +19,7 @@
                 今日优选
             </div>
             <ul>
-                <li class="users" v-for="(broad, item) in todayChoise" :key="item">
+                <li @click="getBroadInfo(broad.id)" class="users" v-for="(broad, item) in todayChoise" :key="item">
                     <div style="height: 100%;width: 15%;float:left;">
                         <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="broad.picUrl" alt="">
                     </div>
@@ -35,7 +35,7 @@
                 精品推荐
             </div>
             <ul>
-                <li v-for="(recommend, item) in recommends.slice(0,3)" :key="item" style="text-align: left;margin-left: 1%;float: left;width: 32%;min-height: 3rem;">
+                <li @click="getBroadInfo(recommend.id)" v-for="(recommend, item) in recommends.slice(0,3)" :key="item" style="text-align: left;margin-left: 1%;float: left;width: 32%;min-height: 3rem;">
                     <img style="width: 100%;height: 3rem;" :src="recommend.picUrl" alt="">
                     <p>{{ recommend.rcmdtext }}</p>
                 </li>
@@ -46,7 +46,7 @@
                 热门电台
             </div>
             <ul style="margin-bottom: 2rem;">
-                <li class="hotBroad" v-for="(hotB, item) in hotBroads" :key="item">
+                <li @click="getBroadInfo(hotB.id)" class="hotBroad" v-for="(hotB, item) in hotBroads" :key="item">
                     <div style="width:100%;">
                         <!-- <div class="iconplay">
                             <van-icon name="play-circle" />
@@ -103,6 +103,9 @@ export default {
         // 获取电台分类名称
         goclass(){
             this.$router.push({path: '/goclass'})
+        },
+        getBroadInfo(id){
+            this.$router.push({path: '/broadUserInfo',query:{id: id}})
         }
     },
 }

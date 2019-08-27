@@ -16,7 +16,7 @@
         </div>
         <div>
             <ul style="margin-bottom: 1.2rem;">
-                <li class="userBroads" @click="playBroad(userBroad)" v-for="(userBroad, item) in userBroads" :key="item">
+                <li class="userBroads" @click="playBroad(userBroad, item)" v-for="(userBroad, item) in userBroads" :key="item">
                     <van-icon class="iconBroadInfo" name="play-circle-o" />
                     <span style="font-size: 0.4rem;line-height: 1.5rem;">{{ userBroad.name }}</span>
                 </li>
@@ -63,8 +63,12 @@ export default {
         goUp(){
             history.go(-1)
         },
-        playBroad(info){
-            this.$router.push({path: '/playBroad',query:{songId: info.mainSong.id,id: info.id}})
+        playBroad(info, item){
+            // this.$router.push({path: '/playBroad',query:{songId: info.mainSong.id,id: info.id}})
+            console.log(info)
+            this.$store.dispatch('setPlayList', this.userBroads)
+            this.$store.dispatch('setlistId', null)
+            this.$emit('getid',info.mainSong.id,info.coverUrl,info.mainSong.name, item, info.duration,info.id)
         }
     },
 }

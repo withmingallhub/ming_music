@@ -208,7 +208,7 @@ export default {
             }
         },
         // 从歌单中获取现在要播放歌曲的id，并且请求接口获取播放url
-        updateMusic(id, url, name, item, dt){
+        updateMusic(id, url, name, item, dt, djid){
             this.listen.id = id
             if(this.$store.state.user.playMusic.musicId === id){
                 this.playAudio()
@@ -216,7 +216,7 @@ export default {
             else{
                 this.listen.musicPic = url
                 this.listen.musicName = name
-                this.$emit('listengetid',id, url, name, item, dt)
+                this.$emit('listengetid',id, url, name, item, dt, djid)
                 // 切换音乐图片转动
                 this.imgShow = false
                 this.runPic()
@@ -225,8 +225,12 @@ export default {
         },
         // 到播放音乐详细页面，有歌词啥的
         goMusicInfo(){
-            if(this.listen.musicPic)
-            this.$router.push({path:'/musicMore',query:{musicId:this.listen.id}})
+            if(this.listen.musicPic){
+                if(!this.$store.state.user.playMusic.broadId)
+                    this.$router.push({path:'/musicMore',query:{musicId:this.listen.id}})
+                else 
+                    this.$router.push({path:'/playBroad'})
+            }
         },
         // 进行播放歌曲
         playAudio(){

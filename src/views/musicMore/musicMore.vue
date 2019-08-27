@@ -194,7 +194,7 @@ export default {
             this.musicTime = min + ':' + miao
             this.lyric = []
             // 更新歌词
-            axios.post('/api//lyric?id=' + this.playMusic.musicId).then((res)=>{
+            axios.post('/api/lyric?id=' + this.playMusic.musicId).then((res)=>{
                 if(res.data.lrc){
                     let geci = res.data.lrc.lyric.split("[");
                     let y = 0
@@ -394,7 +394,7 @@ export default {
     line-height: 1rem;
 }
 .topName {
-    line-height: 1.2rem;
+    line-height: 1rem;
     font-size: 0.4rem;
     clear: both;
     margin-left: -0.5rem;

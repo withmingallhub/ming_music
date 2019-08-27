@@ -41,6 +41,7 @@ export default {
         },
         // 当这个音乐播放完毕，根据播放类型，选择‘单曲循环’，‘列表循环’，‘随机播放’
         audioEnd(){
+            if(this.$store.state.user.playMusic.broadId) return 0
             if(this.$store.state.user.playList[0].al){
                 this.playList = this.$store.state.user.playList
                 let type = this.$store.state.user.listenType
@@ -103,14 +104,15 @@ export default {
             })
         },
         // 获取音乐信息，并且存入vuex，
-        updateMus(id ,url, name, item, dt){
+        updateMus(id ,url, name, item, dt, djid){
             const that = this
             let picName = {
                 picUrl: url,
                 musicName: name,
                 musicId: id,
                 i:item,
-                musicLong: dt
+                musicLong: dt,
+                broadId: djid
             }
             that.$store.dispatch('setPlayMusic',picName)
             axios.post('/api/song/url?id=' + id,{
