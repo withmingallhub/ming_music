@@ -49,6 +49,7 @@ export default {
         getUserInfo(){
             axios.post('/api/dj/detail?rid=' + this.userId).then((res)=>{
                 this.userInfo = res.data.djRadio
+                console.log(res)
                 this.getuserBroads()
             })
         },
@@ -63,9 +64,7 @@ export default {
             history.go(-1)
         },
         playBroad(info){
-            axios.post('/api/song/url?id=' + info.id).then((res)=>{
-                console.log(res)
-            })
+            this.$router.push({path: '/playBroad',query:{songId: info.mainSong.id,id: info.id}})
         }
     },
 }

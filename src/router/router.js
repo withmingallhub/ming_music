@@ -9,6 +9,7 @@ import broadStation from '@/views/broadStation/broadStation'
 import goclass from '@/views/broadStation/goclass'
 import getclass from '@/views/broadStation/getclass'
 import broadUserInfo from '@/views/broadStation/broadUserInfo'
+import playBroad from '@/views/broadStation/playBroad'
 import MV from '@/views/MV/MV'
 import moreMV from '@/views/MV/moreMV'
 import playMV from '@/views/MV/playMV'
@@ -77,6 +78,10 @@ export default[
                 path: '/changeInfo',
                 component: changeInfo
             },
+            {
+                path: '/playBroad',
+                component: playBroad
+            }
         ]
     },
     {
