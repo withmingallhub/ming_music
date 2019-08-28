@@ -2,7 +2,7 @@
     <div>
         <div style="width: 100%;min-height: 9.5rem;" >
             <p style="font-size: 0.4rem;">MV专区</p>
-            <div style="margin-left: 0.2rem;width: 25%;height: 0.9rem;border-bottom: 2px solid black;">
+            <div style="margin-left: 0.2rem;width: 25%;height: 0.9rem;">
                 <span style="font-size: 0.4rem;line-height: 0.8rem;">
                     精彩推荐
                 </span>
@@ -18,7 +18,7 @@
                 </span>
             </div>
             
-            <div style="clear: both;margin-left: 0.2rem;width: 25%;height: 0.9rem;border-bottom: 2px solid black;">
+            <div style="clear: both;margin-left: 0.2rem;width: 25%;height: 0.9rem;">
                 <span style="font-size: 0.4rem;line-height: 0.8rem;">更多MV</span>
             </div>
             <div style="width: 100%;min-height: 5rem;">

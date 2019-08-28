@@ -5,13 +5,13 @@
                 <van-icon class="broadIcon" name="apps-o" />
                 <p>电台分类</p>
             </div>
-            <div style="width: 33.4%;height: 1.5rem;float: left;">
+            <div @click="gosublist" style="width: 33.4%;height: 1.5rem;float: left;">
                 <van-icon class="broadIcon" name="user-circle-o" />
                 <p>我的订阅</p>
             </div>
-            <div style="width: 33.2%;height: 1.5rem;float: left;">
+            <div @click="goBuyWell" style="width: 33.2%;height: 1.5rem;float: left;">
                 <van-icon class="broadIcon" name="after-sale" />
-                <p>付费精品</p>
+                <p>付费精选</p>
             </div>
         </div>
         <div style="width: 100%;min-height: 1.5rem;">
@@ -24,7 +24,7 @@
                         <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="broad.picUrl" alt="">
                     </div>
                     <div style="height: 100%;width: 80%;float: left;border-bottom: 1px solid rgb(230,230,230)">
-                        <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ broad.lastProgramName }}</div>
+                        <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ broad.name }}</div>
                         <div style="clear: both;height: 0.6rem;width:80%;margin-left: 0.4rem;font-size: 0.2rem;line-height: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align: left;">{{ broad.name }}</div>
                     </div>
                 </li>
@@ -106,6 +106,14 @@ export default {
         },
         getBroadInfo(id){
             this.$router.push({path: '/broadUserInfo',query:{id: id}})
+        },
+        // 我的电台订阅
+        gosublist(){
+            this.$router.push({path: '/sublist'})
+        },
+        //  付费精选
+        goBuyWell(){
+            this.$router.push({path: '/buyWell'})
         }
     },
 }

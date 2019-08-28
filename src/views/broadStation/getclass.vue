@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(25, 181, 254);overflow:hidden;height:1rem;text-align:center;">
+        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(51,51,51);;overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconclassinfo" />
             <span style="font-size: 0.4rem;line-height: 1rem;">{{ className }}</span>
         </div>

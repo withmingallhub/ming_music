@@ -105,7 +105,7 @@
                 </div>
                 <div v-if="searchType == 1009">
                     主播电台
-                    <li class="users" v-for="(broad, item) in broadStation" :key="item">
+                    <li @click="getBroadInfo(broad.id)" class="users" v-for="(broad, item) in broadStation" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
                             <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="broad.picUrl" alt="">
                         </div>
@@ -253,7 +253,11 @@ export default {
                 this.$store.dispatch('setlistId', 0)
                 this.$emit('getid',li.id,res.data.songs[0].al.picUrl,res.data.songs[0].name, item, res.data.songs[0].dt)
             })
-        }
+        },
+        //  前往主播电台信息页面
+        getBroadInfo(id){
+            this.$router.push({path: '/broadUserInfo',query:{id: id}})
+        },
     }
 }
 </script>

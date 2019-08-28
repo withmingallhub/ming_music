@@ -2,6 +2,13 @@
 import SignUp from '@/views/SignUp/SignUp'
 import Login from '@/views/login/login'
 import main from '@/views/main/main'
+import listenList from '@/views/main/listenList'
+
+import musicList from '@/views/main/musicList'
+import ranking from '@/views/main/ranking'
+import singer from '@/views/main/singer'
+import special from '@/views/main/special'
+
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
 import changeInfo from '@/views/changeInfo/changeInfo'
@@ -10,11 +17,12 @@ import goclass from '@/views/broadStation/goclass'
 import getclass from '@/views/broadStation/getclass'
 import broadUserInfo from '@/views/broadStation/broadUserInfo'
 import playBroad from '@/views/broadStation/playBroad'
+import sublist from '@/views/broadStation/sublist'
+import buyWell from '@/views/broadStation/buyWell'
 import MV from '@/views/MV/MV'
 import moreMV from '@/views/MV/moreMV'
 import playMV from '@/views/MV/playMV'
 import search from '@/views/search/search'
-import listenList from '@/views/main/listenList'
 import Layout from '@/views/Layout'
 import listen from '@/views/listen'
 
@@ -63,7 +71,31 @@ export default[
                     {
                         path: '/broadUserInfo',
                         component: broadUserInfo
-                    }
+                    },
+                    {
+                        path: '/sublist',
+                        component: sublist
+                    },
+                    {
+                        path: '/buyWell',
+                        component: buyWell
+                    },
+                    {
+                        path: '/musicList',
+                        component: musicList
+                    },
+                    {
+                        path: '/ranking',
+                        component: ranking
+                    },
+                    {
+                        path: '/singer',
+                        component: singer
+                    },
+                    {
+                        path: '/special',
+                        component: special
+                    },
                 ]
             },
             {

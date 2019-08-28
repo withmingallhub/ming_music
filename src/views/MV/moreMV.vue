@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(25, 181, 254);overflow:hidden;height:1rem;text-align:center;">
+        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconmoreMV" />
-            <span style="font-size: 0.4rem;line-height: 1rem;">更多MV</span>
+            <span style="font-size: 0.3rem;line-height: 1rem;color: white;">更多MV</span>
         </div>
         <div style="width:100%;min-height: 4rem;">
             <div style="font-size: 0.4rem;line-height: 1rem;width: 20%;height: 1rem;border-bottom: 1px solid black;margin-left: 0.2rem;">
@@ -97,6 +97,7 @@ export default {
 }
 .iconmoreMV {
     float: left;
+    color: azure;
     font-size: 0.4rem;
     line-height: 1rem;
 }

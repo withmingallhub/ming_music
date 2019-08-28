@@ -296,6 +296,7 @@ export default {
     background: rgb(25, 181, 254);
     position: fixed;
     top:0rem;
+    z-index: 1;
 }
 .topchange {
     color: rgb(235, 235, 225);

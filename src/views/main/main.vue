@@ -1,20 +1,19 @@
 <template>
     <div>
         <div class="pai">
-            <div style="width: 25%;float: left;">
+            <div @click="ranking" style="width: 25%;float: left;">
                 <van-icon class="iconPai" name="bar-chart-o" />
                 <p>排行</p>
             </div>
-            <div style="width: 25%;float: left;">
+            <div @click="singer" style="width: 25%;float: left;">
                 <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-user-o"></i>
                 <p>歌手</p>
-            </div>
-            
-            <div style="width: 25%;float: left;">
+            </div> 
+            <div @click="gomusicList" style="width: 25%;float: left;">
                 <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-tasks"></i>
                 <p>歌单</p>
             </div>
-            <div style="width: 25%;float: left;">
+            <div @click="special" style="width: 25%;float: left;">
                 <i style="font-size: 0.8rem;color: rgb(25,181,254)" class="fa fa-dot-circle-o"></i>
                 <p>专辑</p>
             </div>
@@ -72,6 +71,22 @@ export default {
         },
         getList(id,name){
             this.$router.push({path:'/listenList',query:{id:id,top:name}})
+        },
+        //  排行
+        ranking(){
+            this.$router.push({path: '/ranking'})
+        },
+        // 歌单
+        gomusicList(){
+            this.$router.push({path: '/musicList'})
+        },
+        // 歌手
+        singer(){
+            this.$router.push({path: '/singer'})
+        },
+        //  专辑
+        special(){
+            this.$router.push({path: '/special'})
         }
     }
 }
