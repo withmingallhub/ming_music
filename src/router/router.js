@@ -8,6 +8,7 @@ import musicList from '@/views/main/musicList'
 import ranking from '@/views/main/ranking'
 import singer from '@/views/main/singer'
 import special from '@/views/main/special'
+import rankingI from '@/views/main/rankingI'
 
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
@@ -96,6 +97,10 @@ export default[
                         path: '/special',
                         component: special
                     },
+                    {
+                        path: '/rankingI',
+                        component: rankingI
+                    }
                 ]
             },
             {
