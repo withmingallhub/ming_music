@@ -293,13 +293,13 @@ export default {
 .Top{
     height: 1.2rem;
     width:100%;
-    background: rgb(25, 181, 254);
+    background: #FF0033;
     position: fixed;
     top:0rem;
     z-index: 1;
 }
 .topchange {
-    color: rgb(235, 235, 225);
+    color: rgb(220, 220, 220);
     font-size:0.6rem;
     line-height: 1.1rem;
     margin-left:0.3rem;

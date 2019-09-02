@@ -2,21 +2,9 @@
     <div>
         <div style=";background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconmusicList" />
-            <span style="line-height: 1rem;font-size: 0.3rem;color: azure">歌手</span>
+            <span style="line-height: 1rem;font-size: 0.3rem;color: azure">{{ typeName }}</span>
         </div>
-        <div style="margin-bottom: 1.2rem;width: 96%;margin-left: 2%;min-height: 5rem;margin-top: 0.2rem;">
-            <li @click="typeSinger" class="singer">
-                <div style="float: left;width: 25%;height: 2.5rem;">
-                    <i style="font-size: 1.25rem;margin-top: 0.625rem;" class="fa fa-user-o"></i>
-                </div>
-                <div style="float: left;width: 60%;height: 3.5rem;">
-                    <div style="width: 80%;height: 2rem;line-height: 2.5rem;font-size: 0.4rem;text-align: left;padding-left: 0.3rem;">
-                        歌手分类
-                    </div>
-                </div>
-            </li>
-            <p style="text-align: left;margin: 0.3rem 0rem 0.4rem 0.3rem;font-weight: 700;">热门歌手</p>
-            <li @click="goSinger(sing)" class="singer" v-for="(sing, item) in singers" :key="item">
+        <li @click="goSinger(sing)" class="singer" v-for="(sing, item) in typeSingers" :key="item">
                 <div style="float: left;width: 25%;height: 2.5rem;">
                     <img style="width: 2rem;height: 2rem;margin-top: 0.25rem;" v-lazy="sing.img1v1Url" alt="">
                 </div>
@@ -26,34 +14,33 @@
                     </div>
                 </div>
             </li>
-        </div>
     </div>
 </template>
+
 <script>
 import axios from 'axios'
-
 export default {
     data() {
         return {
-            singers: []
+            typeName: '',
+            item: '',
+            typeSingers: []
         }
     },
     mounted() {
-        this.getHotSinger()
+        this.typeName = this.$route.query.name
+        this.item = this.$route.query.id
+        this.getSinger()
     },
     methods: {
         goUp(){
             history.go(-1)
         },
-        //  获取歌手列表
-        getHotSinger(){
-            axios.get('/api/top/artists?limit=20').then((res)=>{
+        getSinger(){
+            axios.post('/api/artist/list?cat=' + this.item).then((res)=>{
                 console.log(res)
-                this.singers = res.data.artists
+                this.typeSingers = res.data.artists
             })
-        },
-        typeSinger(){
-            this.$router.push({path: '/typeSinger'})
         },
         goSinger(sing){
             this.$router.push({path: '/singerInfo',query:{id: sing.id,img: sing.img1v1Url,name: sing.name}})

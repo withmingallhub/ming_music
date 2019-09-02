@@ -28,7 +28,7 @@
                             <van-icon name="play-circle" />
                             <span>{{ more.playCount}}</span>
                         </div>
-                        <img style="width: 100%;" v-lazy="more.cover" alt="">
+                        <img style="width: 100%;" :src="more.cover" alt="">
                     </div>
                     <div style="line-height:1rem;word-wrap: break-word;word-break: break-all;overflow: hidden;text-align: left;font-size: 0.4rem;width: 100%;min-height: 1rem;">
                         {{ more.name }}
@@ -36,7 +36,7 @@
                 </li>
             </div>
 
-            <div @click="goMoreMV" style="line-height: 1rem;font-size: 0.4rem;margin-bottom: 1.6rem;width: 100%;height: 1rem;border-top: 1px solid rgb(200,200,200);">
+            <div @click="goMoreMV" style="line-height: 1rem;font-size: 0.4rem;margin-bottom: 1.6rem;width: 100%;height: 1rem;;">
                 查看更多MV
             </div>
         </div>

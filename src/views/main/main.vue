@@ -20,7 +20,7 @@
         </div>
         <div>
             <li class="musiclist" @click="getList(list.id,list.name)" v-for="(list ,item) in musicList" :key="item">
-                <img style="width:1.3rem;height: 1.3rem;line-height:1.5rem;float:left;margin-left: 0.4rem;" :src="list.coverImgUrl" alt="">
+                <img style="width:1.3rem;height: 1.3rem;line-height:1.5rem;float:left;margin-left: 0.4rem;" v-lazy="list.coverImgUrl" alt="">
                 <span style="line-height: 1.5rem;margin-left: -1.7rem;">{{list.name}}</span>
             </li>
         </div>

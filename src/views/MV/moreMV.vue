@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
+        <div style=";background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconmoreMV" />
             <span style="font-size: 0.3rem;line-height: 1rem;color: white;">更多MV</span>
         </div>
@@ -13,7 +13,7 @@
                     <van-icon name="play-circle" />
                     <span>{{ MV.playCount}}</span>
                 </div>
-                <img style="width: 96%;" :src="MV.cover" alt="">
+                <img style="width: 96%;" v-lazy="MV.cover" alt="">
                 <span>
                     {{ MV.name }} ({{ MV.artistName }})
                 </span>
@@ -30,7 +30,7 @@
                             <van-icon name="play-circle" />
                             <span>{{ more.playCount}}</span>
                         </div>
-                        <img style="width: 100%;" :src="more.cover" alt="">
+                        <img style="width: 100%;" v-lazy="more.cover" alt="">
                     </div>
                     <div style="line-height:1rem;word-wrap: break-word;word-break: break-all;overflow: hidden;text-align: left;font-size: 0.4rem;width: 100%;min-height: 1rem;">
                         {{ more.name }}

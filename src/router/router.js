@@ -9,6 +9,9 @@ import ranking from '@/views/main/ranking'
 import singer from '@/views/main/singer'
 import special from '@/views/main/special'
 import rankingI from '@/views/main/rankingI'
+import typeSinger from '@/views/main/typeSinger/typeSinger'
+import thisType from '@/views/main/typeSinger/thisType'
+import singerInfo from '@/views/main/typeSinger/singerInfo'
 
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
@@ -100,6 +103,18 @@ export default[
                     {
                         path: '/rankingI',
                         component: rankingI
+                    },
+                    {
+                        path: '/typeSinger',
+                        component: typeSinger
+                    },
+                    {
+                        path: '/thisType',
+                        component: thisType
+                    },
+                    {
+                        path: '/singerInfo',
+                        component: singerInfo
                     }
                 ]
             },

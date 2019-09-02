@@ -21,7 +21,7 @@
             <ul>
                 <li @click="getBroadInfo(broad.id)" class="users" v-for="(broad, item) in todayChoise" :key="item">
                     <div style="height: 100%;width: 15%;float:left;">
-                        <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="broad.picUrl" alt="">
+                        <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  v-lazy="broad.picUrl" alt="">
                     </div>
                     <div style="height: 100%;width: 80%;float: left;border-bottom: 1px solid rgb(230,230,230)">
                         <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ broad.name }}</div>
@@ -36,7 +36,7 @@
             </div>
             <ul>
                 <li @click="getBroadInfo(recommend.id)" v-for="(recommend, item) in recommends.slice(0,3)" :key="item" style="text-align: left;margin-left: 1%;float: left;width: 32%;min-height: 3rem;">
-                    <img style="width: 100%;height: 3rem;" :src="recommend.picUrl" alt="">
+                    <img style="width: 100%;height: 3rem;" v-lazy="recommend.picUrl" alt="">
                     <p>{{ recommend.rcmdtext }}</p>
                 </li>
             </ul>

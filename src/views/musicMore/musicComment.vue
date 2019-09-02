@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(25, 181, 254);overflow:hidden;height:1rem;text-align:center;">
+        <div style=";background: #FF0033;overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="icon" />
             <span class="topName">{{ playMusic.musicName }}</span>
         </div>
@@ -11,7 +11,7 @@
                 <li style="width:40%;float: left;margin-left: 0.2rem;margin-bottom:0.3rem;"><span style="float: left;margin-left: 0.2rem;font-weight: 700">精彩评论</span></li>
                 <li class="comment" v-for="(hotComment, item) in hotComments" :key="item">
                     <div style="width:15%;height: 2rem;float: left;">
-                        <img class="imgHead" :src="hotComment.user.avatarUrl" alt="">
+                        <img class="imgHead" v-lazy="hotComment.user.avatarUrl" alt="">
                     </div>
                     <div class="commentRight">
                         <div class="commentName">
@@ -37,7 +37,7 @@
                 <li style="width:40%;float: left;margin-left: 0.2rem;margin-top: 1rem;margin-bottom:0.3rem;"><span style="float: left;margin-left: 0.2rem;font-weight: 700">最新评论</span></li>
                 <li class="comment" v-for="(newComment, item1) in newComments" :key="item1 + 15">
                     <div style="width:15%;height: 2rem;float: left;">
-                        <img class="imgHead" :src="newComment.user.avatarUrl" alt="">
+                        <img class="imgHead" v-lazy="newComment.user.avatarUrl" alt="">
                     </div>
                     <div class="commentRight">
                         <div class="commentName">

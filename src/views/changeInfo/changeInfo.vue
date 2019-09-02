@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="background: rgb(25, 181, 254);overflow:hidden;height:1rem;text-align:center;">
+        <div style="background: #FF0033;overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconInfo" />
             <span style="line-height: 1rem;font-size: 0.4rem;position:relative;right: 0.26rem;">我的信息</span>
         </div>

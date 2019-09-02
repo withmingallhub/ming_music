@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
+        <div style=";background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconclass" />
             <span style="font-size: 0.3rem;line-height: 1rem;color: white;">全部分类</span>
         </div>

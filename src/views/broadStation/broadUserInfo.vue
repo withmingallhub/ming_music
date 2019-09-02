@@ -1,17 +1,17 @@
 <template>
     <div>
-        <div style="border-top: 1px solid rgb(200,200,200);background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
+        <div style="background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
             <van-icon @click="goUp" name="arrow-left" class="iconUserbroad" />
             <span style="line-height: 1rem;font-size: 0.3rem;color: azure">{{ userInfo.dj.nickname }}--电台</span>
         </div>
         <div class="userBroad">
             <div style="width: 2rem;height: 2rem;position: relative;left: 50%;margin-left: -1rem;">
-                <img v-lazy="userInfo.picUrl" alt="" style="width: 2rem;height: 2rem;">
+                <img :src="userInfo.picUrl" alt="" style="width: 2rem;height: 2rem;">
             </div>
             <div style="width: 100%;height: 1rem;">
                 <span style="color: azure">创建人：</span>
                 <span style="color: azure">{{ userInfo.dj.nickname }}</span>
-                <img style="width: 1rem;height: 1rem;border-radius: 50%;position: relative;top: 0.3rem;" v-lazy="userInfo.dj.avatarUrl" alt="">
+                <img style="width: 1rem;height: 1rem;border-radius: 50%;position: relative;top: 0.3rem;" :src="userInfo.dj.avatarUrl" alt="">
             </div>
         </div>
         <div>
@@ -90,6 +90,9 @@ export default {
 .userBroads {
     width: 94%;
     height: 1.5rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
     text-align: left;
     margin-left: 3%;
     margin-right: 3%;
