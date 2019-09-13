@@ -12,6 +12,17 @@ import rankingI from '@/views/main/rankingI'
 import typeSinger from '@/views/main/typeSinger/typeSinger'
 import thisType from '@/views/main/typeSinger/thisType'
 import singerInfo from '@/views/main/typeSinger/singerInfo'
+import listClass from '@/views/main/listClass/listClass'
+import albumsInfo from '@/views/main/albums/albumsInfo'
+import myLove from '@/views/main/myLove/myLove'
+
+import loveUser from '@/views/myLoves/loveUser'
+import loveSinger from '@/views/myLoves/loveSinger'
+import loveBroad from '@/views/myLoves/loveBroad'
+import loveSpecial from '@/views/myLoves/loveSpecial'
+import loveUserInfo from '@/views/myLoves/loveUserInfo'
+
+import loveUserSayCom from '@/views/myLoves/loveUser/loveUserSayCom'
 
 import musicMore from '@/views/musicMore/musicMore'
 import musicComment from '@/views/musicMore/musicComment'
@@ -115,7 +126,16 @@ export default[
                     {
                         path: '/singerInfo',
                         component: singerInfo
+                    },
+                    {
+                        path: '/listClass',
+                        component: listClass
+                    },
+                    {
+                        path: '/albumsInfo',
+                        component: albumsInfo
                     }
+
                 ]
             },
             {
@@ -133,7 +153,36 @@ export default[
             {
                 path: '/playBroad',
                 component: playBroad
+            },
+            {
+                path: '/loveUser',
+                component: loveUser
+            },
+            {
+                path: '/loveSpecial',
+                component: loveSpecial
+            },
+            {
+                path: '/loveSinger',
+                component: loveSinger
+            },
+            {
+                path: '/loveBroad',
+                component: loveBroad
+            },
+            {
+                path: '/myLove',
+                component: myLove
+            },
+            {
+                path: '/loveUserInfo',
+                component: loveUserInfo
+            },
+            {
+                path: '/loveUserSayCom',
+                component: loveUserSayCom
             }
+            
         ]
     },
     {

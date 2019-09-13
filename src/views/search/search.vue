@@ -45,34 +45,34 @@
                     <li @click="SearchmusicList('1000')" :class="searchType == 1000 ? 'searchIs' : 'others'">歌单</li>
                     <li @click="SearchbroadStation('1009')" :class="searchType == 1009 ? 'searchIs' : 'others'">主播电台</li>
                 </ul>
-                <div v-if="searchType == 1">
-                    单曲
+                <div v-if="searchType == 1" style="clear: both;">
                     <li :class="mlist1 === item ? 'playMlist' : 'mlist'" @click="getmusics(li, item)" v-for="(li ,item) in music" :key="item">
                         <span class="musicName" style="margin-right:0.2rem;">{{li.name}}</span>
                         <span style="margin-left:0.2rem;line-height:1.2rem;">{{li.artists[0].name}} - {{ li.album.name }}</span>
                     </li>
                 </div>
-                <div v-if="searchType == 1002">
-                    用户
+                <div v-if="searchType == 1002" style="clear: both;">
                     <li class="users" v-for="(user, item) in user" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
-                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :v-lazy="user.avatarUrl" alt="">
+                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="user.avatarUrl" alt="">
                         </div>
                         <div style="height: 100%;width: 68%;float: left;border-bottom: 1px solid rgb(230,230,230)">
                             <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ user.nickname }}</div>
                             <div style="clear: both;height: 0.6rem;width:80%;margin-left: 0.4rem;font-size: 0.2rem;line-height: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align: left;">{{ user.signature }}</div>
                             
                         </div>
-                        <div style="width: 15%;height: 0.8rem;float:right;border: 1px solid black;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
+                        <div v-if="!user.followed" style="width: 15%;height: 0.8rem;color: rgb(255,0,51);border:1px solid rgb(255,0,51);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
                             关注
+                        </div>
+                        <div v-if="user.followed" style="width: 15%;height: 0.8rem;color: rgb(170,170,170);border:1px solid rgb(170,170,170);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
+                            已关注
                         </div>
                     </li>
                 </div>
-                <div v-if="searchType == 100">
-                    歌手
+                <div v-if="searchType == 100" style="clear: both;">
                     <li @click="goSinger(sing)" class="singer" v-for="(sing, item) in singer" :key="item">
                         <div style="float: left;width: 25%;height: 2.5rem;">
-                            <img style="width: 2rem;height: 2rem;margin-top: 0.25rem;" :v-lazy="sing.img1v1Url" alt="">
+                            <img style="width: 2rem;height: 2rem;margin-top: 0.25rem;" :src="sing.img1v1Url" alt="">
                         </div>
                         <div style="float: left;width: 60%;height: 3.5rem;">
                             <div style="width: 80%;height: 2rem;line-height: 2.5rem;font-size: 0.4rem;text-align: left;padding-left: 0.3rem;">
@@ -81,11 +81,10 @@
                         </div>
                     </li>
                 </div>
-                <div v-if="searchType == 10">
-                    专辑
-                    <li class="users" v-for="(spec, item) in special" :key="item">
+                <div v-if="searchType == 10" style="clear: both;">
+                    <li @click="goSpecial(spec)" class="users" v-for="(spec, item) in special" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
-                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :v-lazy="spec.picUrl" alt="">
+                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="spec.picUrl" alt="">
                         </div>
                         <div style="height: 100%;width: 80%;float: left;border-bottom: 1px solid rgb(230,230,230)">
                             <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ spec.name }}</div>
@@ -93,11 +92,10 @@
                         </div>
                     </li>
                 </div>
-                <div v-if="searchType == 1000">
-                    歌单
-                    <li class="users" v-for="(list, item) in musicList" :key="item">
+                <div v-if="searchType == 1000" style="clear: both;">
+                    <li @click="getList(list.id,list.name)" class="users" v-for="(list, item) in musicList" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
-                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :v-lazy="list.coverImgUrl" alt="">
+                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="list.coverImgUrl" alt="">
                         </div>
                         <div style="height: 100%;width: 80%;float: left;border-bottom: 1px solid rgb(230,230,230)">
                             <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ list.name }}</div>
@@ -105,11 +103,10 @@
                         </div>
                     </li>
                 </div>
-                <div v-if="searchType == 1009">
-                    主播电台
+                <div v-if="searchType == 1009" style="clear: both;">
                     <li @click="getBroadInfo(broad.id)" class="users" v-for="(broad, item) in broadStation" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
-                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :v-lazy="broad.picUrl" alt="">
+                            <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="broad.picUrl" alt="">
                         </div>
                         <div style="height: 100%;width: 80%;float: left;border-bottom: 1px solid rgb(230,230,230)">
                             <div style="clear: both;height: 0.8rem;width: 80%;line-height: 0.9rem;float:left;margin-left: 0.4rem;font-size: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align:left;">{{ broad.name }}</div>
@@ -263,6 +260,14 @@ export default {
         // 点击歌手进入纤细页面
         goSinger(sing){
             this.$router.push({path: '/singerInfo',query:{id: sing.id,img: sing.img1v1Url,name: sing.name}})
+        },
+        // 前往歌单
+        getList(id,name){
+            this.$router.push({path:'/listenList',query:{id:id,top:name}})
+        },
+        // 前往专辑详细页面
+        goSpecial(user){
+            this.$router.push({path: '/albumsInfo',query:{id: user.id}})
         }
     }
 }

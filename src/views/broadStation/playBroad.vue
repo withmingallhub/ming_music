@@ -5,13 +5,12 @@
             <van-icon @click="goUp" name="arrow-left" class="iconMoreBroad" />
             <span class="topNameBroad">{{ broadInfo.name }}</span>
         </div>
-        <div style="width: 100%;height: 12rem;border: 1px solid black;">
-            <div style="width: 100%;height: 2.5rem">
-                <img style="width: 2rem;height: 2rem;margin-top: 0.5rem;" :src="broadInfo.coverUrl" alt="">
+        <div style="width: 100%;height: 12rem;">
+            <div style="width: 100%;height: 6.5rem">
+                <img style="width: 6rem;height: 6rem;margin-top: 0.5rem;" :src="broadInfo.coverUrl" alt="">
             </div>
             <div style="width: 100%;height: 3rem;">
                 <span style="font-size: 0.4rem;">{{ dj.nickname }}</span>
-                <p style="font-size: 0.4rem;">{{ dj.brand }}</p>
             </div>
         </div>
         <div style="position:fixed;bottom:0rem;width:100%;padding-bottom:0.8rem;">

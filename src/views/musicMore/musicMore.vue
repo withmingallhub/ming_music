@@ -222,9 +222,11 @@ export default {
             let list = this.$store.state.user.musicInfo.playlist
             console.log(list)
             for(let i = 0;i < list.length;i ++){
-                this.List[i] = {
-                    name: list[i].name,
-                    item: list[i].id
+                if(list[i].userId == this.$store.state.user.userId){
+                    this.List[i] = {
+                        name: list[i].name,
+                        item: list[i].id
+                    }
                 }
             }
             this.listenType = this.$store.state.user.listenType

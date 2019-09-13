@@ -48,11 +48,11 @@
             </div>
             <div v-if="choise == '4'" style="margin-bottom: 1.2rem;background: rgb(245,245,245)">
                 <div style="text-align: left;line-height: 0.6rem;font-size: 0.3rem;width: 96%;margin-left: 2%;min-height:2rem;">
-                    <p style="border-left: 5px solid orange;padding-left: 0.2rem;margin-bottom: 0.2rem;margin-top: 0.2rem;">歌手信息</p>
+                    <p style="border-left: 5px solid rgb(255,0,51);padding-left: 0.2rem;margin-bottom: 0.2rem;margin-top: 0.2rem;">歌手信息</p>
                     {{ singerintroduct }}
                 </div>
                 <div v-for="(info, item) in singerInfo" :key="item" style="text-align: left;line-height: 0.6rem;font-size: 0.3rem;width: 96%;margin-left: 2%;min-height:2rem;">
-                    <p style="border-left: 5px solid orange;padding-left: 0.2rem;margin-bottom: 0.2rem;margin-top: 0.2rem;">{{ info.ti }}</p>
+                    <p style="border-left: 5px solid rgb(255,0,51);padding-left: 0.2rem;margin-bottom: 0.2rem;margin-top: 0.2rem;">{{ info.ti }}</p>
                     {{ info.txt }}
                 </div>
             </div>

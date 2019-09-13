@@ -20,7 +20,7 @@
                 <div style="float: left;width: 25%;height: 2.5rem;">
                     <img style="width: 2rem;height: 2rem;margin-top: 0.25rem;" v-lazy="sing.img1v1Url" alt="">
                 </div>
-                <div style="float: left;width: 60%;height: 3.5rem;">
+                <div style="float: left;width: 60%;height: 2.5rem;">
                     <div style="width: 80%;height: 2rem;line-height: 2.5rem;font-size: 0.4rem;text-align: left;padding-left: 0.3rem;">
                         {{ sing.name }}
                     </div>

@@ -12,7 +12,7 @@
                 <br>
                 <span style="color: white">{{ userInfo.profile.nickname }}</span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="goMyLove()" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
                     我的关注
@@ -284,6 +284,10 @@ export default {
                 this.$router.push({path: '/broadStation'})
             else if(item == 2)
                 this.$router.push({path: '/MV'})
+        },
+        // 前往我的关注
+        goMyLove(){
+            this.$router.push({path:'/myLove',query:{id: this.userId}})
         }
     }
 }
