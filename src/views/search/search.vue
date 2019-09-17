@@ -250,7 +250,7 @@ export default {
                 id: li.id
             }).then((res)=>{    
                 this.mlist1 = item
-                this.$store.dispatch('setPlayList', this.listenHistory)
+                this.$store.dispatch('setPlayList', this.music)
                 this.$store.dispatch('setlistId', 0)
                 this.$emit('getid',li.id,res.data.songs[0].al.picUrl,res.data.songs[0].name, item, res.data.songs[0].dt)
             })
