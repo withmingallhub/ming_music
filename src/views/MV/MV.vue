@@ -1,7 +1,9 @@
 <template>
     <div>
-        <div style="width: 100%;min-height: 9.5rem;" >
-            <p style="font-size: 0.4rem;">MV专区</p>
+        <div @click="goMoreMV" style="line-height: 1rem;font-size: 0.4rem;width: 4rem;height: 1rem;border-bottom: 1px solid black">
+            查看更多MV
+        </div>
+        <div style="width: 100%;min-height: 9.5rem;;margin-bottom: 1.6rem" >
             <div style="margin-left: 0.2rem;width: 25%;height: 0.9rem;">
                 <span style="font-size: 0.4rem;line-height: 0.8rem;">
                     精彩推荐
@@ -34,10 +36,6 @@
                         {{ more.name }}
                     </div>
                 </li>
-            </div>
-
-            <div @click="goMoreMV" style="line-height: 1rem;font-size: 0.4rem;margin-bottom: 1.6rem;width: 100%;height: 1rem;;">
-                查看更多MV
             </div>
         </div>
     </div>

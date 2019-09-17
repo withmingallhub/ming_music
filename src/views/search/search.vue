@@ -52,7 +52,7 @@
                     </li>
                 </div>
                 <div v-if="searchType == 1002" style="clear: both;">
-                    <li class="users" v-for="(user, item) in user" :key="item">
+                    <li @click="goUserInfo(user.userId)" class="users" v-for="(user, item) in user" :key="item">
                         <div style="height: 100%;width: 15%;float:left;">
                             <img style="width:1rem;height:1rem;border-radius: 50%;margin-top: 0.2rem;"  :src="user.avatarUrl" alt="">
                         </div>
@@ -61,10 +61,10 @@
                             <div style="clear: both;height: 0.6rem;width:80%;margin-left: 0.4rem;font-size: 0.2rem;line-height: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align: left;">{{ user.signature }}</div>
                             
                         </div>
-                        <div v-if="!user.followed" style="width: 15%;height: 0.8rem;color: rgb(255,0,51);border:1px solid rgb(255,0,51);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
+                        <div @click="loveUser(user.userId, item)" v-if="!user.followed" style="width: 15%;height: 0.8rem;color: rgb(255,0,51);border:1px solid rgb(255,0,51);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
                             关注
                         </div>
-                        <div v-if="user.followed" style="width: 15%;height: 0.8rem;color: rgb(170,170,170);border:1px solid rgb(170,170,170);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
+                        <div @click="noloveUser(user.userId, item)" v-if="user.followed" style="width: 15%;height: 0.8rem;color: rgb(170,170,170);border:1px solid rgb(170,170,170);float:right;line-height: 0.7rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
                             已关注
                         </div>
                     </li>
@@ -120,6 +120,8 @@
 
 <script>
 import axios from 'axios'
+import { Toast } from 'vant';
+
 export default {
     data() {
         return {
@@ -202,7 +204,7 @@ export default {
             this.searchType = item
             console.log(item)
             console.log(this.user)
-            axios.post('/api/search?keywords=' + this.value + '&type=' + item + '&limit=100').then((res)=>{
+            axios.post('/api/search?keywords=' + this.value + '&type=' + item + '&limit=100&timestamp=' + Math.random()*100).then((res)=>{
                 console.log(res)
                 this.user = res.data.result.userprofiles
             })
@@ -246,9 +248,9 @@ export default {
         getmusics(li, item){
             axios.post('/api/song/detail?ids=' + li.id,{
                 id: li.id
-            }).then((res)=>{
+            }).then((res)=>{    
                 this.mlist1 = item
-                this.$store.dispatch('setPlayList', this.music)
+                this.$store.dispatch('setPlayList', this.listenHistory)
                 this.$store.dispatch('setlistId', 0)
                 this.$emit('getid',li.id,res.data.songs[0].al.picUrl,res.data.songs[0].name, item, res.data.songs[0].dt)
             })
@@ -257,7 +259,7 @@ export default {
         getBroadInfo(id){
             this.$router.push({path: '/broadUserInfo',query:{id: id}})
         },
-        // 点击歌手进入纤细页面
+        // 点击歌手进入详细页面
         goSinger(sing){
             this.$router.push({path: '/singerInfo',query:{id: sing.id,img: sing.img1v1Url,name: sing.name}})
         },
@@ -268,6 +270,29 @@ export default {
         // 前往专辑详细页面
         goSpecial(user){
             this.$router.push({path: '/albumsInfo',query:{id: user.id}})
+        },
+        loveUser(id, i){
+            // 阻止冒泡事件
+            window.event.cancelBubble = true
+            axios.post('/api/follow?id=' + id +'&t=1').then((res)=>{
+                if(res.data.code == 200){
+                    this.user[i].followed = true
+                    Toast('已关注')
+                }
+            })
+        },
+        noloveUser(id, i){
+            // 阻止冒泡事件
+            window.event.cancelBubble = true
+            axios.post('/api/follow?id=' + id +'&t=2').then((res)=>{
+                if(res.data.code == 200){
+                    this.user[i].followed = false
+                    Toast('已取消关注')
+                }
+            })
+        },
+        goUserInfo(id){
+            this.$router.push({path: '/loveUserInfo',query:{id: id}})
         }
     }
 }

@@ -9,11 +9,11 @@
                 <span :style="{marginTop: '0.1rem',marginLeft: '0.2rem',clear: 'both',display: 'inline-block',height: '0.4rem',width: '1rem',borderRadius: '1rem',background: 'rgba(255,255,255,0.5)',color: 'white',lineHeight: '0.4rem',textAlign: 'center'}">Lv.{{ loveUserInfoall.level }}</span>
             </div>
             <div :style="{height: '2.5rem',width: '100%'}">
-                <div :style="{paddingTop: '0.2rem',height: '0.8rem',width: '100%',textAlign: 'left',color: 'white',fontSize: '0.4rem',paddingLeft: '0.3rem;'}">
+                <div :style="{paddingTop: '0.2rem',height: '0.8rem',width: '100%',textAlign: 'left',color: 'white',fontSize: '0.4rem',paddingLeft: '0.3rem'}">
                     {{ loveUserInfo.nickname }}
                 </div>
                 <div :style="{lineHeight: '0.6rem',height: '0.8rem',width: '100%',color: 'rgb(170,170,170)',fontSize: '0.3rem'}">
-                    <span :style="{float: 'left',marginLeft: '0.3rem'}">关注 {{ loveUserInfo.followeds }} | 关注 {{ loveUserInfo.follows }}</span>
+                    <span :style="{float: 'left',marginLeft: '0.3rem'}">关注 {{ loveUserInfo.followeds }} | 粉丝 {{ loveUserInfo.follows }}</span>
                     <span :style="{float: 'right',marginRight: '0.3rem'}">{{ loveUserInfo.followTime }}</span>
                 </div>
                 <div style="lineHeight: 0.8rem;clear: both;height: 0.8rem;width: 90%;color: rgb(170,170,170);font-size: 0.3rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
@@ -67,6 +67,7 @@
                     <span :style="{float: 'right',fontSize: '0.2rem',color: 'rgb(200,200,200)',marginTop: '0.2rem'}">
                         {{ say.isTime }}
                     </span>
+                    <div v-if="userId == myId" @click="delet(say.id)" :style="{clear: 'right',width: '2rem',float: 'right',color: 'rgb(61,162,254)',marginTop: '0.1rem'}">删除</div>
                 </div>
                 <div v-if="say.all.msg" :style="{paddingLeft: '0.5rem',textAlign: 'left',lineHeight: '0.5rem',width: '100%',minHeight: '0.5rem',background: 'white'}">
                     {{ say.all.msg }}
@@ -85,14 +86,14 @@
                         </span>
                     </div>
                 </div>
-                <div v-if="say.all.video" :style="{clear:'left',width: '100%',height: '1.5rem',background: 'white'}">
-
+                <div v-if="say.all.video" :style="{clear:'left',width: '100%',minHeight: '1.5rem',background: 'white'}">
+                    <img :src="say.all.video.coverUrl" alt="" style="width: 90%">
                 </div>
-                <div v-if="say.all.event" :style="{clear: 'left',width: '100%',height: '1.5rem',background: 'white'}">
-                    
+                <div v-if="say.all.event" :style="{clear: 'left',width: '100%',minHeight: '1.5rem',background: 'rgb(240,240,240)',textAlign: 'left'}">
+                    <span style="color: rgb(61,162,254)">{{ say.all.event.user.nickname }}：</span>{{ JSON.parse(say.all.event.json).msg }}
                 </div>
-                <div v-if="say.all.resource" :style="{clear: 'left',width: '100%',height: '1.5rem',background: 'white'}">
-                    
+                <div v-if="say.all.resource" :style="{clear: 'left',width: '100%',minHeight: '1.5rem',background: 'white',background: 'rgb(240,240,240)',textAlign: 'left'}">
+                    {{ say.all.resource.content }}
                 </div>
                 <!-- 点赞评论转发 -->
                 <div :style="{clear: 'left',width: '100%',height: '1rem',background: 'white'}">
@@ -107,7 +108,7 @@
                     </div>
                     <div :style="{lineHeight: '1.2rem',float: 'left',width: '33.3%',height: '100%',color: 'rgb(150,150,150)'}">
                         <van-icon name="share" :style="{fontSize: '0.5rem'}"/>
-                        <span style="position: relative;bottom: 0.1rem">转发</span>
+                        <span @click="copyIt(say.id)" style="position: relative;bottom: 0.1rem">转发</span>
                     </div>
                 </div>
             </li>
@@ -119,16 +120,30 @@
         >
         
         </van-image-preview>
+        <van-dialog
+        v-model="showCopy"
+        title="动态转发"
+        show-cancel-button
+        confirm-button-color="rgb(255,0,51)"
+        confirm-button-text="转发"
+        @confirm="copySay"
+        >
+            <van-cell-group>
+                <van-field v-model="copyWord.value" placeholder="我的意见" />
+            </van-cell-group>
+        </van-dialog>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import { Dialog, Toast } from 'vant';
 
 export default {
     data() {
         return {
             userId: '',
+            myId: '',
             // 好友的所有信息
             loveUserInfoall: {
 
@@ -154,17 +169,30 @@ export default {
             // 是否打开图片预览
             show: false,
             // 预览图片的url
-            images: []
+            images: [],
+            // 转发确认
+            showCopy: false,
+            copyWord:{
+                id: '',
+                value: '',
+                userId: ''
+            }
         }
     },
     mounted() {
         this.userId = this.$route.query.id
+        this.getMyId()
         this.getUserInfo()
         this.getUserMusicList()
     },
     methods: {
         goUp(){
             history.go(-1)  
+        },
+        getMyId(){
+            axios.get('/api/login/status').then((res)=>{
+                this.myId = res.data.profile.userId
+            })
         },
         getUserInfo(){
             axios.post('/api/user/detail?uid=' + this.userId).then((res)=>{
@@ -244,6 +272,36 @@ export default {
         },
         comment(id){
             this.$router.push({path: '/loveUserSayCom',query:{id: id}})
+        },
+        copyIt(id){
+            this.copyWord.id = id
+            this.showCopy = true
+        },
+        copySay(){
+            var that = this
+            axios.get('/api/login/status').then((res)=>{
+                if(res.data.code == 200){
+                    that.copyWord.userId = res.data.profile.userId
+                    axios.post('/api/event/forward?evId=' + that.copyWord.id + '&uid=' + that.userId + '&forwards=' + that.copyWord.value).then((res1)=>{
+                        if(res.data.code == 200)
+                        Toast('转发成功')
+                    })
+                }
+            })
+        },
+        delet(id){
+            Dialog.confirm({
+                title: '确认删除该动态？',
+                confirmButtonColor: '#FF0033',
+                confirmButtonText: '删除'
+            }).then(() => {
+                axios.post('/api/event/del?evId=' + id).then((res)=>{
+                    if(res.data.code == 200)
+                    Toast('删除成功')
+                })
+            }).catch(() => {
+                
+            });
         }
     },
 }

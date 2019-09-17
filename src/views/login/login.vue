@@ -1,9 +1,9 @@
 <template>
     <div class="login" @touchmove.prevent>
-        <div style="height:1.5rem;background:rgba(25,137,250,0.3);margin-bottom:1.5rem;">
-            <span style="font-size:0.7rem;line-height:1.5rem;">登录</span>
+        <div style=";background: #FF0033;overflow:hidden;height:1rem;text-align:center;">
+            <span style="line-height: 1rem;font-size: 0.3rem;color: azure">登录到网易云音乐</span>
         </div>
-        <van-cell-group>
+        <van-cell-group style="margin-top: 1rem">
             <van-field
                 v-model="Login.phone"
                 label="手机号"
@@ -17,7 +17,7 @@
             
             />
         </van-cell-group>
-        <van-button @click="LoginButton" type="info"  style="margin-top:0.5rem;border-radius:5px;padding-right:1rem;padding-left:1rem;">登录</van-button>
+        <van-button @click="LoginButton" size="small" type="info"  style="border: none;background: rgb(255,0,51);margin-top:0.5rem;border-radius:5px;padding-right:1rem;padding-left:1rem;">登录</van-button>
         <div style="text-align:center;width:100%;margin-top:0.5rem;overflow:hidden;">
             <span style="color:rgb(25,137,250);font-size:0.4rem;float:left;margin-left:1rem;" @click="goSignUp">没有账号？注册一个</span>
             <span style="color:rgb(25,137,250);font-size:0.4rem;float:right;margin-right:1rem;" @click="findPassword">忘记密码？找回密码</span>
@@ -80,9 +80,6 @@ export default {
 <style lang="">
 .login{
     height:50rem;
-    background-size:contain;
-    background-image: url(../../assets/login.jpeg);
-    background-repeat: no-repeat
 }
 .van-cell{
     background-color: transparent;

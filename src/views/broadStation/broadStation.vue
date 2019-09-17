@@ -123,7 +123,7 @@ export default {
 .broadIcon {
     font-size: 0.8rem;
     margin-top: 0.2rem;
-    color: rgb(25, 181, 254);
+    color: rgb(255,0,51);
 }
 .users {
     list-style: none;

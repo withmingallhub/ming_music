@@ -6,7 +6,6 @@
         </div>
         <ul>
             <li class="myLoves" @click="goMyLoveUser">我关注的用户</li>
-            <li class="myLoves" @click="goMyLoveSpecial">我关注的专辑</li>
             <li class="myLoves" @click="goMyLoveSinger">我关注的歌手</li>
             <li class="myLoves" @click="goMyLoveBroad">我关注的电台</li>
         </ul>
@@ -32,14 +31,14 @@ export default {
         goMyLoveUser(){
             this.$router.push({path: '/loveUser',query:{id: this.userId}})
         },
-        goMyLoveSpecial(){
-            this.$router.push({path: '/loveSpecial',query:{id: this.userId}})
+        goMyLoveMe(){
+            this.$router.push({path: '/loveMe',query:{id: this.userId}})
         },
         goMyLoveSinger(){
             this.$router.push({path: '/loveSinger',query:{id: this.userId}})
         },
         goMyLoveBroad(){
-            this.$router.push({path: '/loveBroad',query:{id: this.userId}})
+            this.$router.push({path: '/sublist'})
         }
         
     },

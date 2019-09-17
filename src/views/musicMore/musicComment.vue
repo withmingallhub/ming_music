@@ -4,14 +4,18 @@
             <van-icon @click="goUp" name="arrow-left" class="icon" />
             <span class="topName">{{ playMusic.musicName }}</span>
         </div>
-        <Input v-model="writeComment" style="width:70%;height: 1rem;" type="text" placeholder="快来发表你的意见"></Input>
-        <van-button @click="sendComment" size="mini" type="info">评论</van-button>
+        <van-cell-group
+        :style="{width: '80%',float: 'left'}"
+        >
+            <van-field v-model="writeComment" placeholder="快来发表你的意见" />
+        </van-cell-group>
+        <van-button @click="sendComment" size="small" type="info" style="margin-top: 0.2rem">评论</van-button>
         <div>
             <ul style="width: 100%;">
                 <li style="width:40%;float: left;margin-left: 0.2rem;margin-bottom:0.3rem;"><span style="float: left;margin-left: 0.2rem;font-weight: 700">精彩评论</span></li>
                 <li class="comment" v-for="(hotComment, item) in hotComments" :key="item">
                     <div style="width:15%;height: 2rem;float: left;">
-                        <img class="imgHead" v-lazy="hotComment.user.avatarUrl" alt="">
+                        <img @click="goUserInfo(hotComment.user.userId)" class="imgHead" v-lazy="hotComment.user.avatarUrl" alt="">
                     </div>
                     <div class="commentRight">
                         <div class="commentName">
@@ -37,7 +41,7 @@
                 <li style="width:40%;float: left;margin-left: 0.2rem;margin-top: 1rem;margin-bottom:0.3rem;"><span style="float: left;margin-left: 0.2rem;font-weight: 700">最新评论</span></li>
                 <li class="comment" v-for="(newComment, item1) in newComments" :key="item1 + 15">
                     <div style="width:15%;height: 2rem;float: left;">
-                        <img class="imgHead" v-lazy="newComment.user.avatarUrl" alt="">
+                        <img @click="goUserInfo(newComment.user.userId)" class="imgHead" v-lazy="newComment.user.avatarUrl" alt="">
                     </div>
                     <div class="commentRight">
                         <div class="commentName">
@@ -150,6 +154,9 @@ export default {
         // 没有接口
         send(){
             Toast('暂时没有回复评论的接口，但是你可以评论歌曲或者点赞哦')
+        },
+        goUserInfo(id){
+            this.$router.push({path: '/loveUserInfo',query:{id: id}})
         }
     }
 }

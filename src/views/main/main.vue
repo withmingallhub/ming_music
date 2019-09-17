@@ -20,8 +20,8 @@
         >
         </van-dialog>
         <div class="pai">
-            <div @click="ranking" style="width: 25%;float: left;padding-top: 0.1rem;">
-                <van-icon class="iconPai" name="bar-chart-o" />
+            <div @click="ranking" style="width: 25%;float: left;">
+                <i style="font-size: 0.8rem;color: rgb(255,0,51)" class="fa fa-signal"></i>
                 <p>排行</p>
             </div>
             <div @click="singer" style="width: 25%;float: left;">

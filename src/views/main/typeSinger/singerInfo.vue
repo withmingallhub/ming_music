@@ -4,14 +4,16 @@
             <van-icon @click="goUp" name="arrow-left" class="iconmusicList" />
             <span style="line-height: 1rem;font-size: 0.3rem;color: azure">歌手描述</span>
         </div>
-        <div style="height:5.5rem;background: rgba(51,51,51);">
+        <div style="height:6rem;background: rgba(51,51,51);">
             <div style="width:100%;height:3rem;">
                 <img style="height:2.5rem;margin-top: 0.5rem;" :src="picUrl" alt="">
             </div>
-            <div style="width:100%;height:1.5rem;">
-                <span style="color: white;line-height:1rem;">{{ singerName }}</span>
+            <div style="width:100%;height:2rem;">
+                <p style="color: white;line-height:1rem;">{{ singerName }}</p>
+                <van-icon @click="toloveSinger" v-if="!loveSinger" class="unlove" name="like-o" />
+                <van-icon @click="loveNoSinger" v-if="loveSinger" class="loveList" name="like" />
             </div>
-            <ul style="width: 100%;height: 1rem;border: 1px solid black;">
+            <ul style="width: 100%;height: 1rem;border-top: 1px solid black;">
                 <li @click="goIt(1)" :class="choise == '1' ? 'singerit' : 'singerChoise'">单曲</li>
                 <li @click="goIt(2)" :class="choise == '2' ? 'singerit' : 'singerChoise'">专辑</li>
                 <li @click="goIt(3)" :class="choise == '3' ? 'singerit' : 'singerChoise'">MV</li>
@@ -70,6 +72,7 @@ export default {
             singerId: '',
             singerName: '',
             picUrl: '',
+            loveSinger: Boolean,
             // 选择歌手-单曲，专辑，mv，和详细信息
             choise: '1',
             // 播放的音乐，颜色变化
@@ -93,9 +96,10 @@ export default {
             history.go(-1)
         },
         getSingerInfo(){
-            axios.post('/api/artists?id=' + this.singerId).then((res)=>{
+            axios.post('/api/artists?id=' + this.singerId + '&timestamp=' + Math.random()*100).then((res)=>{
                 console.log(res)
                 this.singerMusic = res.data.hotSongs
+                this.loveSinger = res.data.artist.followed
             })
         },
         goIt(item){
@@ -144,6 +148,24 @@ export default {
         playMV(id){
             this.$router.push({path:'/playMV',query:{id: id}})
         },
+        toloveSinger(){
+            var that = this
+            axios.post('/api/artist/sub?id=' + this.singerId + '&t=1').then((res)=>{
+                if(res.data.code == 200){
+                    that.loveSinger = true
+                    Toast('关注成功')
+                }
+            })
+        },
+        loveNoSinger(){
+            var that = this
+            axios.post('/api/artist/sub?id=' + this.singerId + '&t=0').then((res)=>{
+                if(res.data.code == 200){
+                    that.loveSinger = false
+                    Toast('取消关注')
+                }
+            })
+        }
     },
 }
 </script>
@@ -204,5 +226,17 @@ export default {
     width: 100%;
     height: 2rem;
     list-style: none;
+}
+.unlove {
+    color: white;
+    font-size: 0.6rem;
+    float: right;
+    margin-right: 0.4rem;
+}
+.loveList {
+    color: rgb(255,0,51);
+    font-size: 0.6rem;
+    float: right;
+    margin-right: 0.4rem;
 }
 </style>

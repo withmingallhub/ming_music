@@ -8,6 +8,7 @@ import Vant from 'vant';
 import { Slider } from 'vant';
 import { ActionSheet } from 'vant';
 import { Icon } from 'vant';
+import { Dialog } from 'vant';
 import { Lazyload } from 'vant';
 import 'vant/lib/index.css';
 import 'lib-flexible/flexible'
@@ -21,6 +22,7 @@ Vue.use(Vant);
 // 图片预览
 Vue.use(ImagePreview);
 Vue.use(Lazyload);
+Vue.use(Dialog);
 Vue.use(ActionSheet);
 Vue.use(Slider);
 Vue.use(Icon);

@@ -12,16 +12,16 @@
                 <br>
                 <span style="color: white">{{ userInfo.profile.nickname }}</span>
             </div>
-            <div @click="goMyLove()" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="goMyInfo" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
+                    <span style="color:rgb(177,177,177);"><van-icon name="eye" /></span>
+                    我的信息
+                </span>
+            </div>
+            <div @click="goMyLove" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
                     我的关注
-                </span>
-            </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
-                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
-                    <span style="color:rgb(177,177,177);"><van-icon name="smile-o" /></span>
-                    推荐
                 </span>
             </div>
             <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
@@ -30,31 +30,19 @@
                     我的消息
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
-                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
-                    <span style="color:rgb(177,177,177);"><van-icon name="eye" /></span>
-                    动态
-                </span>
-            </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="goHistory" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="underway-o" /></span>
                     播放记录
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
-                <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
-                    <span style="color:rgb(177,177,177);"><van-icon name="exchange" /></span>
-                    更换手机
-                </span>
-            </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="refresh" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="share" /></span>
                     刷新登陆
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="goOut" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="like" /></span>
                     退出登录
@@ -90,6 +78,7 @@
 
 <script>
 import axios from "axios";
+import { Toast } from 'vant';
 
 export default {
     data() {
@@ -138,8 +127,6 @@ export default {
             //     }
             // },
             changeI:function (newI, oldI) {
-            console.log("改变后的i")
-            console.log(newI)
             let list = this.$store.state.user.playList
             if(list[newI].al)
             this.updateMusic(list[newI].id,list[newI].al.picUrl,list[newI].name,newI,list[newI].dt)
@@ -288,6 +275,27 @@ export default {
         // 前往我的关注
         goMyLove(){
             this.$router.push({path:'/myLove',query:{id: this.userId}})
+        },
+        goMyInfo(){
+            this.$router.push({path: '/loveUserInfo',query:{id: this.userId}})
+        },
+        goHistory(){
+            this.show =false
+            this.$router.push({path: '/listenHistory',query:{id: this.userId}})
+        },
+        refresh(){
+            axios.get('/api/login/refresh').then((res)=>{
+                if(res.data.code == 200){
+                    this.show = false
+                    Toast('刷新成功')
+                }
+            })
+        },
+        goOut(){
+            axios.get('/api/logout').then((res)=>{
+                if(res.data.code == 200)
+                    this.$router.push({path: '/Login'})
+            })
         }
     }
 }

@@ -14,7 +14,7 @@
                     <div style="clear: both;height: 0.6rem;width:80%;margin-left: 0.4rem;font-size: 0.2rem;line-height: 0.4rem; overflow: hidden;text-overflow: ellipsis;white-space:nowrap;text-align: left;">{{ user.signature }}</div>
                     
                 </div>
-                <div @click="noLoveUser(user.id)" style="width: 15%;height: 0.8rem;float:right;background: rgb(255,0,51);color:rgb(230,230,230);line-height: 0.8rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
+                <div @click="noLoveUser(user.userId)" style="width: 15%;height: 0.8rem;float:right;background: rgb(255,0,51);color:rgb(230,230,230);line-height: 0.8rem;margin-top:0.3rem;border-radius: 0.3rem;margin-right: 2%;">
                     已关注
                 </div>
             </li>
@@ -24,6 +24,9 @@
 
 <script>
 import axios from 'axios'
+import { Toast } from 'vant'
+import { Dialog } from 'vant';
+
 
 export default {
     data() {
@@ -54,6 +57,17 @@ export default {
         noLoveUser(id){
             // 阻止冒泡事件
             window.event.cancelBubble = true
+            // 弹窗
+            Dialog.confirm({
+                title: '关注信息',
+                message: '取消关注该用户？'
+            }).then(() => {
+                axios.post('/api/follow?id=' + id +'&t=0').then((res)=>{
+                    if(res.data.code == 200) Toast('已取消关注')
+                })
+            }).catch(() => {
+               console.log('取消')
+            });
         }
     },
 }

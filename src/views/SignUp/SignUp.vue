@@ -1,10 +1,10 @@
 <template>
     <div class="main"  @touchmove.prevent>
-        <div style="height:1.5rem;background:rgba(25,137,250,0.3);margin-bottom:1.5rem;">
-            <van-icon @click="goLogin" name="arrow-left" class="icon" />
-            <span style="font-size:0.7rem;line-height:1.5rem;text-align:center;clear:both;margin-left:-0.8rem;">{{ tittle }}</span>
+        <div style=";background: rgb(255,0,51);overflow:hidden;height:1rem;text-align:center;">
+            <van-icon @click="goLogin" name="arrow-left" class="iconmusicList" />
+            <span style="line-height: 1rem;font-size: 0.3rem;color: azure">{{ tittle }}</span>
         </div>
-        <div v-show="Sign">
+        <div v-show="Sign" style="margin-top: 1rem">
             <van-cell-group>
                 <van-field
                     v-model="SignUp.phone"
@@ -24,7 +24,7 @@
                     </van-button>
                 </van-field>
             </van-cell-group>
-            <van-button @click="SignUpIt" type="info" style="margin-top:0.5rem;border-radius:5px;padding-right:1rem;padding-left:1rem;">下一步</van-button>
+            <van-button @click="SignUpIt" type="info" size="small" style="border: none;background: rgb(255,0,51);margin-top:0.5rem;border-radius:5px;padding-right:1rem;padding-left:1rem;">下一步</van-button>
         </div>
         <div v-show="!Sign">
             <van-cell-group>
@@ -52,7 +52,7 @@
                     required
                 />
             </van-cell-group>
-            <van-button @click="SignUpNum" type="info" style="border-radius:5px;padding-left:1rem;padding-right:1rem;">注册</van-button>
+            <van-button @click="SignUpNum" type="info" size="small" style="border: none;background: rgb(255,0,51);border-radius:5px;padding-left:1rem;padding-right:1rem;">{{ tittle }}</van-button>
         </div>
     </div>
 </template>
@@ -182,12 +182,15 @@ export default {
 </script>
 
 <style lang="">
+.iconmusicList {
+    float: left;
+    font-size: 0.4rem;
+    line-height: 1rem;
+    color: azure;
+}
 .main{
     width:100%;
     height:50rem;
-    background-size:contain;
-    background-image: url(../../assets/login.jpeg);
-    background-repeat: no-repeat
 }
 .theseIn{
     margin-top:0.5rem;

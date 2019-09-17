@@ -18,8 +18,6 @@ import myLove from '@/views/main/myLove/myLove'
 
 import loveUser from '@/views/myLoves/loveUser'
 import loveSinger from '@/views/myLoves/loveSinger'
-import loveBroad from '@/views/myLoves/loveBroad'
-import loveSpecial from '@/views/myLoves/loveSpecial'
 import loveUserInfo from '@/views/myLoves/loveUserInfo'
 
 import loveUserSayCom from '@/views/myLoves/loveUser/loveUserSayCom'
@@ -40,6 +38,8 @@ import playMV from '@/views/MV/playMV'
 import search from '@/views/search/search'
 import Layout from '@/views/Layout'
 import listen from '@/views/listen'
+
+import listenHistory from '@/views/history/listenHistory'
 
 export default[
     {
@@ -134,6 +134,10 @@ export default[
                     {
                         path: '/albumsInfo',
                         component: albumsInfo
+                    },
+                    {
+                        path: '/listenHistory',
+                        component: listenHistory
                     }
 
                 ]
@@ -159,16 +163,8 @@ export default[
                 component: loveUser
             },
             {
-                path: '/loveSpecial',
-                component: loveSpecial
-            },
-            {
                 path: '/loveSinger',
                 component: loveSinger
-            },
-            {
-                path: '/loveBroad',
-                component: loveBroad
             },
             {
                 path: '/myLove',
@@ -181,7 +177,7 @@ export default[
             {
                 path: '/loveUserSayCom',
                 component: loveUserSayCom
-            }
+            },
             
         ]
     },
