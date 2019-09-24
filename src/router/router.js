@@ -40,6 +40,8 @@ import Layout from '@/views/Layout'
 import listen from '@/views/listen'
 
 import listenHistory from '@/views/history/listenHistory'
+import newInfo from '@/views/newInfo/newInfo'
+import sendInfo from '@/views/sendInfo/sendInfo'
 
 export default[
     {
@@ -178,6 +180,14 @@ export default[
                 path: '/loveUserSayCom',
                 component: loveUserSayCom
             },
+            {
+                path: '/newInfo',
+                component: newInfo
+            },
+            {
+                path: '/sendInfo',
+                component: sendInfo
+            }
             
         ]
     },

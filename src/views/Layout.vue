@@ -24,7 +24,7 @@
                     我的关注
                 </span>
             </div>
-            <div style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
+            <div @click="goNewInfo" style="height:1rem;width: 100%;border:1px solid rgb(177,177,177);">
                 <span style="font-size； 0.4rem;float:left;line-height: 1rem;margin-left: 0.3rem;">
                     <span style="color:rgb(177,177,177);"><van-icon name="chat" /></span>
                     我的消息
@@ -296,6 +296,9 @@ export default {
                 if(res.data.code == 200)
                     this.$router.push({path: '/Login'})
             })
+        },
+        goNewInfo(){
+            this.$router.push({path: '/newInfo',query:{id: this.userId}})
         }
     }
 }
