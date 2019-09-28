@@ -54,7 +54,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconclassinfo {
     float: left;
     font-size: 0.4rem;

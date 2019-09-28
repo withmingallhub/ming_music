@@ -180,7 +180,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconInfo {
     float:left;
     margin-left:0.2rem;

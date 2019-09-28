@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .well {
     float: left;
     width: 50%;

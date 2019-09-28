@@ -194,7 +194,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .mlist{
     list-style: none;
     height: 1.2rem;

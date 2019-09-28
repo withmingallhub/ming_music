@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconRankingList {
     float: left;
     font-size: 0.4rem;

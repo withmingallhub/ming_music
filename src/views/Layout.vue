@@ -304,7 +304,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .Top{
     height: 1.2rem;
     width:100%;

@@ -1,61 +1,65 @@
 <template>
     <div style="width:100%;"  @touchmove.prevent>
-        <div style=";background: #FF0033;overflow:hidden;height:1rem;text-align:center;">
-            <van-icon @click="goUp" name="arrow-left" class="icon" />
-            <span class="topName">{{ playMusic.musicName }}</span>
+        <div :style="{position: 'absolute',marginTop: '1rem',width: '100%',height: '17rem',border: '1px solid black',backgroundImage: 'url(' + playMusic.img + ')',backgroundSize: 'cover',filter: 'blur(3rem)',backgroundRepeat: 'no-repeat',backgroundPosition: 'center'}">
         </div>
-        <p>{{ playMusic.write }}</p>
-        <div ref="border" style="height:10.8rem;width:100%;overflow-x:hidden;overflow-y:scroll;text-align:center;">
-            <div v-if="img" style="width:100%;">
-                <div v-if="!playMusic.img" class="musicImage1"></div>
-                <img v-if="playMusic.img" :class="showImg === false ? 'musicImg1 musicImage1' : 'musicImg1'" :src="playMusic.img" alt="">
+        <div style="position:absolute;overflow:hidden;width: 100%;height: 20rem;">
+            <div style="background: rgb(51,51,51);overflow:hidden;height:1rem;text-align:center;">
+                <van-icon @click="goUp" name="arrow-left" class="icon" />
+                <span class="topName">{{ playMusic.musicName }}</span>
             </div>
-            <div v-if="!img" style="padding-bottom:6rem;padding-top:6rem;width:100%">
-                <li v-for="(ric, item) in lyric" :key="item" :class="ricGreen !== item ? 'lyric' : 'lyric ricgreen'">
-                    {{ ric.ric }}
-                </li>
-            </div>
-        </div>
-        <div style="position:fixed;bottom:0rem;width:100%;padding-bottom:0.8rem;">
-            <div style="overflow:hidden;">
-                <div style="float:left;line-height:1.2rem;margin-left:1.5rem;">
-                    <i @click="nextMusic" v-if="listenType == '2'" class="fa fa-random" ></i>
-                    <i @click="oneMusic" v-if="listenType == '1'" class="fa fa-refresh" ></i>
-                    <i @click="randomMusic" v-if="listenType == '3'" class="fa fa-undo" ></i>
+            <p>{{ playMusic.write }}</p>
+            <div ref="border" style="height:10.8rem;width:100%;overflow-x:hidden;overflow-y:scroll;text-align:center;">
+                <div v-if="img" style="width:100%;">
+                    <div v-if="!playMusic.img" class="musicImage1"></div>
+                    <img v-if="playMusic.img" :class="showImg === false ? 'musicImg1 musicImage1' : 'musicImg1'" :src="playMusic.img" alt="">
                 </div>
-                <div style="float:left;line-height:1.2rem;margin-left:1.4rem;">
-                    <van-icon @click="changeShow" class="loveLogo" name="like-o" />
-                    <van-action-sheet
-                    v-model="show"
-                    :actions="List"
-                    @select="onSelect"
-                    title="收藏音乐到"
+                <div v-if="!img" style="padding-bottom:6rem;padding-top:6rem;width:100%">
+                    <li v-for="(ric, item) in lyric" :key="item" :class="ricGreen !== item ? 'lyric' : 'lyric ricgreen'">
+                        {{ ric.ric }}
+                    </li>
+                </div>
+            </div>
+            <div class="blackToWhite">
+                <div style="overflow:hidden;">
+                    <div style="float:left;line-height:1.2rem;margin-left:1.5rem;">
+                        <i @click="nextMusic" v-if="listenType == '2'" class="fa fa-random" ></i>
+                        <i @click="oneMusic" v-if="listenType == '1'" class="fa fa-refresh" ></i>
+                        <i @click="randomMusic" v-if="listenType == '3'" class="fa fa-undo" ></i>
+                    </div>
+                    <div style="float:left;line-height:1.2rem;margin-left:1.4rem;">
+                        <van-icon @click="changeShow" class="loveLogo" name="like-o" />
+                        <van-action-sheet
+                        v-model="show"
+                        :actions="List"
+                        @select="onSelect"
+                        title="收藏音乐到"
+                        />
+                        
+                    </div>
+                    <span @click="geci" style="font-size:0.5rem;line-height: 1.2rem;display:inline-block;height:0.6rem;width:0.6rem;float:left;margin-left:1.4rem;color: rgb(230,230,230)">词</span>
+                    <div style="float:left;line-height:1.2rem;margin-left:1.4rem;">
+                        <van-icon @click="goComment" class="loveLogo" name="chat-o" />
+                    </div>
+                </div>
+                <div style="width:90%;position:relative;left:5%;height:0.3rem;margin-top:0.2rem;">
+                    <!-- vant ui的进度条 -->
+                    <van-slider
+                    style="width:100%;"
+                    v-model="playLong"
+                    bar-height="2px"
+                    active-color="rgb(220,220,220)"
+                    @change="getlong()"
                     />
-                    
                 </div>
-                <span @click="geci" style="font-size:0.5rem;line-height: 1.2rem;display:inline-block;height:0.6rem;width:0.6rem;float:left;margin-left:1.4rem;">词</span>
-                <div style="float:left;line-height:1.2rem;margin-left:1.4rem;">
-                    <van-icon @click="goComment" class="loveLogo" name="chat-o" />
+                <div style="margin-bottom:0.5rem;">
+                    <span style="color: rgb(220,220,220)">{{ playTime }} / {{ musicTime }}</span>
                 </div>
-            </div>
-            <div style="width:90%;position:relative;left:5%;height:0.3rem;margin-top:0.2rem;">
-                <!-- vant ui的进度条 -->
-                <van-slider
-                style="width:100%;"
-                v-model="playLong"
-                bar-height="2px"
-                active-color="#1989fa"
-                @change="getlong()"
-                />
-            </div>
-            <div style="margin-bottom:0.5rem;">
-                <span>{{ playTime }} / {{ musicTime }}</span>
-            </div>
-            <div>
-                <van-icon @click="musicUp" class="show2" name="arrow-left" />
-                <van-icon v-if="audio.playShow" @click="playAudio" class="show1" name="play-circle-o" />
-                <van-icon v-if="!audio.playShow" @click="pauseAudio" class="show1" name="pause-circle-o" />   
-                <van-icon class="show2" @click="musicBottom" name="arrow" />
+                <div>
+                    <van-icon @click="musicUp" class="show2" name="arrow-left" />
+                    <van-icon v-if="audio.playShow" @click="playAudio" class="show1" name="play-circle-o" />
+                    <van-icon v-if="!audio.playShow" @click="pauseAudio" class="show1" name="pause-circle-o" />   
+                    <van-icon class="show2" @click="musicBottom" name="arrow" />
+                </div>
             </div>
         </div>
     </div>
@@ -389,13 +393,20 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .icon {
+    color: white;
     font-size: 0.5rem;
     float: left;
     line-height: 1rem;
 }
 .topName {
+    color:white;
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
     line-height: 1rem;
     font-size: 0.4rem;
     clear: both;
@@ -423,6 +434,7 @@ export default {
     }
 }
 .show1{
+    color: rgb(220,220,220);
     font-size:1.2rem;
     line-height:1.2rem;
     margin-right: 0.5rem;
@@ -431,23 +443,33 @@ export default {
     font-size:1.2rem;
     line-height:1.2rem;
     margin-right: 0.5rem;
+    color: rgb(220,220,220);
 }
 .fa{
     font-size:0.6rem;
     line-height:1.2rem;
+    color:  rgb(220,220,220);
 }
 .loveLogo{
     font-size: 0.6rem;
-    color: rgb(100, 100, 100);
+    color: rgb(220,220,220);
     line-height: 1.2rem;
 }
 .lyric {
+    color: rgb(220,220,220);
     list-style: none;
     height: 1rem;
     line-height: 1rem;
     font-size: 0.4rem;
 }
 .ricgreen {
-    color: #65D25B;
+    color: rgb(250,250,250);
+}
+.blackToWhite {
+    background: linear-gradient(rgba(255,255,255,0.01), rgba(51,51,51,0.6));
+    position:fixed;
+    bottom:0rem;
+    width:100%;
+    padding-bottom:0.8rem;
 }
 </style>

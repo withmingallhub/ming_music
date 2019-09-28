@@ -164,7 +164,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconMoreBroad {
     font-size: 0.5rem;
     float: left;

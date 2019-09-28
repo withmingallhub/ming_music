@@ -119,7 +119,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .broadIcon {
     font-size: 0.8rem;
     margin-top: 0.2rem;

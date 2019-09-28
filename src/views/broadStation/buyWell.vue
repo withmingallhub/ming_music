@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconBuy {
     float: left;
     color:azure;

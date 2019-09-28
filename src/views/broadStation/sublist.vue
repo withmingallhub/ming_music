@@ -47,7 +47,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .users {
     list-style: none;
     height: 1.4rem;

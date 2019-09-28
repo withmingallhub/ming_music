@@ -188,7 +188,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .inconPlayMV {
     font-size: 0.7rem;
     margin-top: 0.3rem;

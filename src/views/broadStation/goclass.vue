@@ -39,7 +39,7 @@ export default {
     },
 }
 </script>
-<style lang="">
+<style scoped>
 .iconclass {
     float: left;
     color:azure;

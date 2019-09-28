@@ -53,7 +53,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconMyLove {
     float: left;
     font-size: 0.4rem;

@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .wangyi {
     float: left;
     width: 50%;

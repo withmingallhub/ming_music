@@ -298,31 +298,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .iconsearch {
     float:left;
     margin-left:0.2rem;
     line-height: 1.2rem;
     font-size: 0.4rem;
 }
-.van-search__content {
-    background: #FF0033;
-}
-.van-search__content div.van-cell__value div input{
-    color: azure !important
-}
-.van-search__content div.van-cell__value div input::-webkit-input-placeholder{
-    color: rgba(250,250,250,0.7)
-}
-.van-search__content div.van-cell__value div input::-moz-placeholder{
-    color: white;
-}
-.van-search__content div.van-cell__value div input:-moz-placeholder{
-    color: white;
-}
-.van-search__content div.van-cell__value div input:-ms-input-placeholder{
-    color: white;
-}
+
 .hotOrNew {
     color: red;
 }

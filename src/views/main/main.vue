@@ -190,7 +190,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .musiclist{
     list-style: none;
     height: 1.5rem;

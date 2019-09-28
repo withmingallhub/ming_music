@@ -74,7 +74,7 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
 .iconUserbroad {
     float: left;
     font-size: 0.4rem;

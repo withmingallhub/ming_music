@@ -162,7 +162,25 @@ export default {
 }
 </script>
 
-<style lang="">
+<style scoped>
+.icon {
+    color: white;
+    font-size: 0.5rem;
+    float: left;
+    line-height: 1rem;
+}
+.topName {
+    color:white;
+    display: inline-block;
+    width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space:nowrap;
+    line-height: 1rem;
+    font-size: 0.4rem;
+    clear: both;
+    margin-left: -0.5rem;
+}
 .comment {
     width:100%;
     min-height: 2rem;
@@ -174,8 +192,8 @@ export default {
     min-height: 2rem;
     width: 80%;
     float:left;
-    padding-bottom: 0.3rem;
-    padding-top: 0.3rem;
+    padding-bottom: 0.3rem; 
+    margin-bottom: 0.3rem;
     border-bottom: 1px solid rgb(170, 170, 170);
 }
 .imgHead {

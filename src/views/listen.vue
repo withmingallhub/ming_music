@@ -96,7 +96,7 @@ export default {
                         that.randomMusic()
                 }
                 else
-                    // this.updateMus(this.playList[i].id, this.playList[i].al.picUrl, this.playList[i].name, i,this.playList[i].dt)
+                    that.updateMus(that.playList[i].id, that.playList[i].al.picUrl, that.playList[i].name, i,that.playList[i].dt)
                     
                     that.listen.musicId = that.playList[i].id
                     that.listen.musicPic = that.playList[i].al.picUrl
