@@ -99,7 +99,7 @@ export default {
         },
         // mounted进行请求，获取歌曲列表每首歌曲信息,这个发送的id是歌单id
         getMusic(){
-            axios.post('/api/playlist/detail?id=' + this.id + '&timestamp=' + Math.random()*100,{
+            axios.post('/api/playlist/detail?id=' + this.id + '&timestamp=' + Date.now(),{
                 id: this.id
             }).then((res)=>{
                 console.log(res)

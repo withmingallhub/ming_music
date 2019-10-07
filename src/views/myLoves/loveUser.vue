@@ -46,7 +46,7 @@ export default {
             history.go(-1)  
         },
         getMyLoveUsers(){
-            axios.post('/api/user/follows?uid=' + this.userId + '&timestamp=' + Math.random()*100).then((res)=>{
+            axios.post('/api/user/follows?uid=' + this.userId + '&timestamp=' + Date.now()).then((res)=>{
                 console.log(res)
                 this.loveUsers = res.data.follow
             })

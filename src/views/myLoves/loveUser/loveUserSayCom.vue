@@ -60,7 +60,7 @@ export default {
             history.go(-1)
         },
         getComment(){
-            axios.post('/api/comment/event?threadId=' + this.commentId + '&timestamp=' + Math.random()*100).then((res)=>{
+            axios.post('/api/comment/event?threadId=' + this.commentId + '&timestamp=' + Date.now()).then((res)=>{
                 console.log(res)
                 this.comments =res.data.comments
                 this.comments = this.comments.reverse()

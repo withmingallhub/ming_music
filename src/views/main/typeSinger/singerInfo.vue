@@ -96,7 +96,7 @@ export default {
             history.go(-1)
         },
         getSingerInfo(){
-            axios.post('/api/artists?id=' + this.singerId + '&timestamp=' + Math.random()*100).then((res)=>{
+            axios.post('/api/artists?id=' + this.singerId + '&timestamp=' + Date.now()).then((res)=>{
                 console.log(res)
                 this.singerMusic = res.data.hotSongs
                 this.loveSinger = res.data.artist.followed

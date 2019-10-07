@@ -49,7 +49,7 @@ export default {
                 if (!(/^1[34578]\d{9}$/.test(this.Login.phone)))
                        Toast('电话号码格式错误')
                 else
-                axios.post('/api/login/cellphone?phone=' + this.Login.phone + '&password=' + this.Login.password,this.Login).then((res)=>{
+                axios.post('/api/login/cellphone?phone=' + this.Login.phone + '&password=' + this.Login.password + '&timestamp=' + Date.now()).then((res)=>{
                     if(res.statusText === 'OK'){
                         Toast('登陆成功！')
                         this.$router.push({path:'/'})

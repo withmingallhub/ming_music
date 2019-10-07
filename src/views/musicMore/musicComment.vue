@@ -96,7 +96,7 @@ export default {
             history.go(-1)
         },
         getComment(){
-            axios.post('/api/comment/music?id=' + this.playMusic.musicId + '&limit=20&timestamp=' + Math.random()*100).then((res)=>{
+            axios.post('/api/comment/music?id=' + this.playMusic.musicId + '&limit=20&timestamp=' + Date.now()).then((res)=>{
                 this.hotComments = this.getTime(res.data.hotComments)
                 this.newComments = this.getTime(res.data.comments)
             })

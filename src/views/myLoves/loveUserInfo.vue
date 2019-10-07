@@ -213,7 +213,7 @@ export default {
         gobeh(){
             this.userChange = false 
             if(this.saysay.length == 0){
-                axios.post('/api/user/event?uid=' + this.userId + '&timestamp=' + Math.random()*100).then((res)=>{
+                axios.post('/api/user/event?uid=' + this.userId + '&timestamp=' + Date.now()).then((res)=>{
                     console.log(res)
                     this.saysay = res.data.events
                     for(let i = 0;i < this.saysay.length;i ++){

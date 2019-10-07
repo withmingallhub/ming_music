@@ -148,7 +148,7 @@ export default {
             else if(this.$route.path == '/broadStation')
                 this.topIcon = '1'
             else this.topIcon = '0'
-            axios.get('/api/login/status').then(function(res){
+            axios.get('/api/login/status?timestamp=' + Date.now()).then(function(res){
                 that.userId = res.data.profile.userId
                 that.$store.dispatch('setUserId',that.userId)
                 that.musicInfo()

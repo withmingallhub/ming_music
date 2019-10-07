@@ -122,7 +122,7 @@ export default {
             })
         },
         musicInfo(){
-            axios.post('/api/user/playlist?uid=' + this.userId + '&timestamp=' + Math.random()*100,{
+            axios.post('/api/user/playlist?uid=' + this.userId + '&timestamp=' + Date.now(),{
                 uid:this.userId
             }).then((res)=>{
                 this.musicList = res.data.playlist

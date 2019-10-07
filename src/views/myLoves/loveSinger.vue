@@ -41,7 +41,7 @@ export default {
             history.go(-1)  
         },
         getSingers(){
-            axios.get('/api/artist/sublist?timestamp=' + Math.random()*100).then((res)=>{
+            axios.get('/api/artist/sublist?timestamp=' + Date.now()).then((res)=>{
                 this.loveSingers = res.data.data
             })
         },

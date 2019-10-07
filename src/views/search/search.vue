@@ -204,7 +204,7 @@ export default {
             this.searchType = item
             console.log(item)
             console.log(this.user)
-            axios.post('/api/search?keywords=' + this.value + '&type=' + item + '&limit=100&timestamp=' + Math.random()*100).then((res)=>{
+            axios.post('/api/search?keywords=' + this.value + '&type=' + item + '&limit=100&timestamp=' + Date.now()).then((res)=>{
                 console.log(res)
                 this.user = res.data.result.userprofiles
             })

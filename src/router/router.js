@@ -46,162 +46,162 @@ import sendInfo from '@/views/sendInfo/sendInfo'
 export default[
     {
         path:'/',
-        component:listen,
+        component:resolve => require(['@/views/listen'],resolve),
         children: [
             {
                 path: '/',
                 // name: 'Layout',
-                component: Layout,
+                component: resolve => require(['@/views/Layout'],resolve),
                 children: [
                     {
                         path: '/',
-                        component: main
+                        component: resolve => require(['@/views/main/main'],resolve)
                     },
                     {
                         path: '/listenList',
-                        component: listenList
+                        component: resolve => require(['@/views/main/listenList'],resolve)
                     },
                     {
                         path: '/broadStation',
-                        component: broadStation
+                        component: resolve => require(['@/views/broadStation/broadStation'],resolve)
                     },
                     {
                         path: '/goclass',
-                        component: goclass
+                        component: resolve => require(['@/views/broadStation/goclass'],resolve)
                     },
                     {
                         path: '/getclass',
-                        component: getclass
+                        component: resolve => require(['@/views/broadStation/getclass'],resolve)
                     },
                     {
                         path: '/MV',
-                        component: MV
+                        component: resolve => require(['@/views/MV/MV'],resolve)
                     },
                     {
                         path: '/moreMV',
-                        component: moreMV
+                        component: resolve => require(['@/views/MV/moreMV'],resolve)
                     },
                     {
                         path: '/search',
-                        component: search
+                        component: resolve => require(['@/views/search/search'],resolve)
                     },
                     {
                         path: '/broadUserInfo',
-                        component: broadUserInfo
+                        component: resolve => require(['@/views/broadStation/broadUserInfo'],resolve)
                     },
                     {
                         path: '/sublist',
-                        component: sublist
+                        component: resolve => require(['@/views/broadStation/sublist'],resolve)
                     },
                     {
                         path: '/buyWell',
-                        component: buyWell
+                        component: resolve => require(['@/views/broadStation/buyWell'],resolve)
                     },
                     {
                         path: '/musicList',
-                        component: musicList
+                        component: resolve => require(['@/views/main/musicList'],resolve)
                     },
                     {
                         path: '/ranking',
-                        component: ranking
+                        component: resolve => require(['@/views/main/ranking'],resolve)
                     },
                     {
                         path: '/singer',
-                        component: singer
+                        component: resolve => require(['@/views/main/singer'],resolve)
                     },
                     {
                         path: '/special',
-                        component: special
+                        component: resolve => require(['@/views/main/special'],resolve)
                     },
                     {
                         path: '/rankingI',
-                        component: rankingI
+                        component: resolve => require(['@/views/main/rankingI'],resolve)
                     },
                     {
                         path: '/typeSinger',
-                        component: typeSinger
+                        component: resolve => require(['@/views/main/typeSinger/typeSinger'],resolve)
                     },
                     {
                         path: '/thisType',
-                        component: thisType
+                        component: resolve => require(['@/views/main/typeSinger/thisType'],resolve)
                     },
                     {
                         path: '/singerInfo',
-                        component: singerInfo
+                        component: resolve => require(['@/views/main/typeSinger/singerInfo'],resolve)
                     },
                     {
                         path: '/listClass',
-                        component: listClass
+                        component: resolve => require(['@/views/main/listClass/listClass'],resolve)
                     },
                     {
                         path: '/albumsInfo',
-                        component: albumsInfo
+                        component: resolve => require(['@/views/main/albums/albumsInfo'],resolve)
                     },
                     {
                         path: '/listenHistory',
-                        component: listenHistory
+                        component: resolve => require(['@/views/history/listenHistory'],resolve)
                     }
 
                 ]
             },
             {
                 path: '/musicMore',
-                component: musicMore
+                component: resolve => require(['@/views/musicMore/musicMore'],resolve)
             },
             {
                 path: '/musicComment',
-                component: musicComment
+                component: resolve => require(['@/views/musicMore/musicComment'],resolve)
             },
             {
                 path: '/changeInfo',
-                component: changeInfo
+                component: resolve => require(['@/views/changeInfo/changeInfo'],resolve)
             },
             {
                 path: '/playBroad',
-                component: playBroad
+                component: resolve => require(['@/views/broadStation/playBroad'],resolve)
             },
             {
                 path: '/loveUser',
-                component: loveUser
+                component: resolve => require(['@/views/myLoves/loveUser'],resolve)
             },
             {
                 path: '/loveSinger',
-                component: loveSinger
+                component: resolve => require(['@/views/myLoves/loveSinger'],resolve)
             },
             {
                 path: '/myLove',
-                component: myLove
+                component: resolve => require(['@/views/main/myLove/myLove'],resolve)
             },
             {
                 path: '/loveUserInfo',
-                component: loveUserInfo
+                component: resolve => require(['@/views/myLoves/loveUserInfo'],resolve)
             },
             {
                 path: '/loveUserSayCom',
-                component: loveUserSayCom
+                component: resolve => require(['@/views/myLoves/loveUser/loveUserSayCom'],resolve)
             },
             {
                 path: '/newInfo',
-                component: newInfo
+                component: resolve => require(['@/views/newInfo/newInfo'],resolve)
             },
             {
                 path: '/sendInfo',
-                component: sendInfo
+                component: resolve => require(['@/views/sendInfo/sendInfo'],resolve)
             }
             
         ]
     },
     {
         path: '/SignUp',
-        component: SignUp,
+        component: resolve => require(['@/views/SignUp/SignUp'],resolve),
     },
     {
         path: '/Login',
-        component: Login
+        component: resolve => require(['@/views/login/login'],resolve)
     },
     {
         path: '/playMV',
-        component: playMV
+        component: resolve => require(['@/views/MV/playMV'],resolve)
     }
     
 ]

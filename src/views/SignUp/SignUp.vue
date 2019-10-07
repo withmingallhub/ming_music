@@ -140,9 +140,6 @@ export default {
                     Notify('两次密码不相等！')
                 }
                 else{
-                    // this.SignUp.password = md5(this.SignUp.password)
-                    // this.isPassword = md5(this.isPassword)
-                    console.log(this.SignUp.password)
                     axios.post('/api/cellphone/existence/check?phone=' + this.SignUp.phone,{
                         phone:this.SignUp.phone
                     }).then((res)=>{
